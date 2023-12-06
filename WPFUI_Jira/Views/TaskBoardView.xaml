@@ -1,0 +1,175 @@
+﻿<Page
+    x:Class="WPFUI_Jira.Views.TaskBoardView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:conv="clr-namespace:System.Windows.Converters;assembly=WindowsBase"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:dd="urn:gong-wpf-dragdrop"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewmodels="clr-namespace:WPFUI_Jira.ViewModels"
+    xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+
+    <Page.Resources>
+        <BooleanToVisibilityConverter x:Key="VisibilityOfBool" />
+    </Page.Resources>
+
+    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Hidden">
+        <StackPanel>
+            <DockPanel>
+                <ItemsControl
+                    x:Name="ItemsControl"
+                    Margin="5"
+                    Padding="5"
+                    dd:DragDrop.DropHandler="{Binding}"
+                    dd:DragDrop.IsDragSource="{Binding ViewModel.IsOwner}"
+                    dd:DragDrop.IsDropTarget="True"
+                    ItemsSource="{Binding ViewModel.TaskBoard.TaskLists}">
+                    <ItemsControl.Style>
+                        <Style TargetType="ItemsControl">
+                            <Style.Triggers>
+                                <Trigger Property="HasItems" Value="false">
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate>
+                                                <TextBlock Text="This Control is empty" />
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ItemsControl.Style>
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border
+                                Width="200"
+                                Margin="10"
+                                Padding="5"
+                                VerticalAlignment="Top"
+                                BorderBrush="Black"
+                                BorderThickness="1.5"
+                                CornerRadius="5">
+                                <StackPanel>
+                                    <Label Content="{Binding Title}" Foreground="Black" />
+                                    <ItemsControl
+                                        dd:DragDrop.DropHandler="{Binding DataContext.ViewModel, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"
+                                        dd:DragDrop.IsDragSource="True"
+                                        dd:DragDrop.IsDropTarget="True"
+                                        ItemsSource="{Binding TaskCards}"
+                                        MinHeight="50">
+                                        <!--<ItemsControl.Style>
+                                            <Style TargetType="ItemsControl">
+                                                <Style.Triggers>
+                                                    <Trigger Property="HasItems" Value="false">
+                                                        <Setter Property="Template">
+                                                            <Setter.Value>
+                                                                <ControlTemplate>
+                                                                    <TextBlock
+                                                                        HorizontalAlignment="Center"
+                                                                        VerticalAlignment="Bottom"
+                                                                        FontSize="25"
+                                                                        FontWeight="Thin"
+                                                                        Foreground="Black"
+                                                                        Text="Wanna add some tasks?"
+                                                                        TextWrapping="Wrap" />
+                                                                </ControlTemplate>
+                                                            </Setter.Value>
+                                                        </Setter>
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </ItemsControl.Style>-->
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <Border
+                                                    Margin="0,5,0,5"
+                                                    Padding="5"
+                                                    VerticalAlignment="Top"
+                                                    BorderBrush="Black"
+                                                    BorderThickness="1">
+                                                    <Grid>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="*" />
+                                                            <ColumnDefinition Width="Auto" />
+                                                        </Grid.ColumnDefinitions>
+                                                        <Grid.RowDefinitions>
+                                                            <RowDefinition Height="Auto" />
+                                                            <RowDefinition Height="Auto" />
+                                                        </Grid.RowDefinitions>
+                                                        <Label
+                                                            Grid.Row="0"
+                                                            Grid.Column="0"
+                                                            Content="{Binding Title}" />
+                                                        <TextBlock
+                                                            Grid.Row="1"
+                                                            Grid.Column="0"
+                                                            Text="{Binding Description}"
+                                                            TextWrapping="Wrap" />
+                                                        <Button
+                                                            Grid.Row="0"
+                                                            Grid.Column="1"
+                                                            Width="30"
+                                                            Height="30"
+                                                            HorizontalAlignment="Right"
+                                                            BorderThickness="0"
+                                                            Command="{Binding DataContext.ViewModel.EditTaskCommand, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}, AncestorLevel=2}}"
+                                                            CommandParameter="{Binding}"
+                                                            MouseEnter="UIElement_OnMouseEnter"
+                                                            MouseLeave="UIElement_OnMouseLeave"
+                                                            Opacity="0.1"
+                                                            Visibility="{Binding DataContext.ViewModel.IsOwner, Converter={StaticResource VisibilityOfBool}, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}, AncestorLevel=2}}">
+                                                            <Image Source="../Resources/Images/edit.png" />
+                                                        </Button>
+                                                        <Button
+                                                            Grid.Row="1"
+                                                            Grid.Column="1"
+                                                            Width="30"
+                                                            Height="30"
+                                                            HorizontalAlignment="Right"
+                                                            VerticalAlignment="Bottom"
+                                                            BorderThickness="0">
+                                                            <Button.Template>
+                                                                <ControlTemplate>
+                                                                    <Ellipse>
+                                                                        <Ellipse.Fill>
+                                                                            <ImageBrush ImageSource="../Resources/Images/noaccountimage.png" />
+                                                                        </Ellipse.Fill>
+                                                                    </Ellipse>
+                                                                </ControlTemplate>
+                                                            </Button.Template>
+                                                        </Button>
+                                                    </Grid>
+                                                </Border>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                    <Button
+                                        Command="{Binding DataContext.ViewModel.CreateTaskCommand, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"
+                                        CommandParameter="{Binding}"
+                                        Content="+"
+                                        Visibility="{Binding DataContext.ViewModel.IsOwner, Converter={StaticResource VisibilityOfBool}, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+                <Button
+                    Width="30"
+                    Height="30"
+                    Margin="0,20"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Content="+"
+                    Visibility="{Binding ViewModel.IsOwner, Converter={StaticResource VisibilityOfBool}}" />
+            </DockPanel>
+        </StackPanel>
+    </ScrollViewer>
+</Page>
