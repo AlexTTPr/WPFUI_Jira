@@ -19,7 +19,7 @@
     <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Hidden">
         <StackPanel>
             <DockPanel>
-                <ItemsControl
+                <ui:VirtualizingItemsControl
                     x:Name="ItemsControl"
                     Margin="5"
                     Padding="5"
@@ -27,7 +27,7 @@
                     dd:DragDrop.IsDragSource="{Binding ViewModel.IsOwner}"
                     dd:DragDrop.IsDropTarget="True"
                     ItemsSource="{Binding ViewModel.TaskBoard.TaskLists}">
-                    <ItemsControl.Style>
+                    <ui:VirtualizingItemsControl.Style>
                         <Style TargetType="ItemsControl">
                             <Style.Triggers>
                                 <Trigger Property="HasItems" Value="false">
@@ -41,13 +41,13 @@
                                 </Trigger>
                             </Style.Triggers>
                         </Style>
-                    </ItemsControl.Style>
-                    <ItemsControl.ItemsPanel>
+                    </ui:VirtualizingItemsControl.Style>
+                    <ui:VirtualizingItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
                             <StackPanel Orientation="Horizontal" />
                         </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
-                    <ItemsControl.ItemTemplate>
+                    </ui:VirtualizingItemsControl.ItemsPanel>
+                    <ui:VirtualizingItemsControl.ItemTemplate>
                         <DataTemplate>
                             <Border
                                 Width="200"
@@ -59,12 +59,17 @@
                                 CornerRadius="5">
                                 <StackPanel>
                                     <Label Content="{Binding Title}" Foreground="Black" />
-                                    <ItemsControl
+                                    <ui:VirtualizingItemsControl
                                         MinHeight="50"
                                         dd:DragDrop.DropHandler="{Binding DataContext.ViewModel, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"
                                         dd:DragDrop.IsDragSource="True"
                                         dd:DragDrop.IsDropTarget="True"
                                         ItemsSource="{Binding TaskCards}">
+                                        <ui:VirtualizingItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <StackPanel Orientation="Vertical" />
+                                            </ItemsPanelTemplate>
+                                        </ui:VirtualizingItemsControl.ItemsPanel>
                                         <!--<ItemsControl.Style>
                                             <Style TargetType="ItemsControl">
                                                 <Style.Triggers>
@@ -87,9 +92,11 @@
                                                 </Style.Triggers>
                                             </Style>
                                         </ItemsControl.Style>-->
-                                        <ItemsControl.ItemTemplate>
+                                        <ui:VirtualizingItemsControl.ItemTemplate>
                                             <DataTemplate>
                                                 <ui:CardAction
+                                                    MinHeight="75"
+                                                    HorizontalAlignment="Stretch"
                                                     Margin="0,5,0,5"
                                                     Padding="5"
                                                     VerticalAlignment="Top"
@@ -194,8 +201,8 @@
                                                     </Grid>
                                                 </Border>-->
                                             </DataTemplate>
-                                        </ItemsControl.ItemTemplate>
-                                    </ItemsControl>
+                                        </ui:VirtualizingItemsControl.ItemTemplate>
+                                    </ui:VirtualizingItemsControl>
                                     <Button
                                         Command="{Binding DataContext.ViewModel.CreateTaskCommand, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"
                                         CommandParameter="{Binding}"
@@ -204,8 +211,8 @@
                                 </StackPanel>
                             </Border>
                         </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
+                    </ui:VirtualizingItemsControl.ItemTemplate>
+                </ui:VirtualizingItemsControl>
                 <Button
                     Width="30"
                     Height="30"
