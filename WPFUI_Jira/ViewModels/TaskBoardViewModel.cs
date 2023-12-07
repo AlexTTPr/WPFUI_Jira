@@ -20,6 +20,7 @@ using System.Threading.Tasks;
 using WPFUI_Jira.Models.Services.Interfaces;
 using WPFUI_Jira.Models.Stores.Interfaces;
 using WPFUI_Jira.Models.Stores;
+using WPFUI_Jira.Models.Services;
 
 namespace WPFUI_Jira.ViewModels;
 
@@ -76,10 +77,12 @@ public partial class TaskBoardViewModel : BaseViewModel, IDropTarget
 
     }
 
-    [RelayCommand]
-    public void EditTask(TaskCard taskCard)
-    {
-
+	[RelayCommand]
+	public void EditTask(TaskCard taskCard)
+	{
+		if (!IsOwnerOrExecutor(taskCard))
+			return;
+		Debug.WriteLine("Edited...");
 	}
 
     [RelayCommand]
@@ -87,6 +90,12 @@ public partial class TaskBoardViewModel : BaseViewModel, IDropTarget
     {
 
     }
+
+	bool IsOwnerOrExecutor(TaskCard taskCard)
+	{
+		//SUS...
+		return IsOwner || taskCard.Executor?.Id == AuthenticationService.AccountStore.CurrentUser.Id;
+	}
 
     public void DragOver(IDropInfo dropInfo)
     {

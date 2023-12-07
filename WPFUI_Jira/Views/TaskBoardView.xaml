@@ -6,8 +6,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:dd="urn:gong-wpf-dragdrop"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:viewmodels="clr-namespace:WPFUI_Jira.ViewModels"
     xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+    xmlns:viewmodels="clr-namespace:WPFUI_Jira.ViewModels"
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
@@ -60,11 +60,11 @@
                                 <StackPanel>
                                     <Label Content="{Binding Title}" Foreground="Black" />
                                     <ItemsControl
+                                        MinHeight="50"
                                         dd:DragDrop.DropHandler="{Binding DataContext.ViewModel, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"
                                         dd:DragDrop.IsDragSource="True"
                                         dd:DragDrop.IsDropTarget="True"
-                                        ItemsSource="{Binding TaskCards}"
-                                        MinHeight="50">
+                                        ItemsSource="{Binding TaskCards}">
                                         <!--<ItemsControl.Style>
                                             <Style TargetType="ItemsControl">
                                                 <Style.Triggers>
@@ -89,7 +89,52 @@
                                         </ItemsControl.Style>-->
                                         <ItemsControl.ItemTemplate>
                                             <DataTemplate>
-                                                <Border
+                                                <ui:CardAction
+                                                    Margin="0,5,0,5"
+                                                    Padding="5"
+                                                    VerticalAlignment="Top"
+                                                    Command="{Binding DataContext.ViewModel.EditTaskCommand, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}, AncestorLevel=2}}"
+                                                    CommandParameter="{Binding}"
+                                                    IsChevronVisible="False">
+                                                    <Grid>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="*" />
+                                                            <ColumnDefinition Width="Auto" />
+                                                        </Grid.ColumnDefinitions>
+                                                        <Grid.RowDefinitions>
+                                                            <RowDefinition Height="Auto" />
+                                                            <RowDefinition Height="Auto" />
+                                                        </Grid.RowDefinitions>
+                                                        <Label
+                                                            Grid.Row="0"
+                                                            Grid.Column="0"
+                                                            Content="{Binding Title}" />
+                                                        <ui:TextBlock
+                                                            Grid.Row="1"
+                                                            Grid.Column="0"
+                                                            Text="{Binding Description}"
+                                                            TextWrapping="Wrap" />
+                                                        <ui:Button
+                                                            Grid.Row="1"
+                                                            Grid.Column="1"
+                                                            Width="30"
+                                                            Height="30"
+                                                            HorizontalAlignment="Right"
+                                                            VerticalAlignment="Bottom"
+                                                            BorderThickness="0">
+                                                            <Button.Template>
+                                                                <ControlTemplate>
+                                                                    <Ellipse>
+                                                                        <Ellipse.Fill>
+                                                                            <ImageBrush ImageSource="../Resources/Images/noaccountimage.png" />
+                                                                        </Ellipse.Fill>
+                                                                    </Ellipse>
+                                                                </ControlTemplate>
+                                                            </Button.Template>
+                                                        </ui:Button>
+                                                    </Grid>
+                                                </ui:CardAction>
+                                                <!--<Border
                                                     Margin="0,5,0,5"
                                                     Padding="5"
                                                     VerticalAlignment="Top"
@@ -147,7 +192,7 @@
                                                             </Button.Template>
                                                         </Button>
                                                     </Grid>
-                                                </Border>
+                                                </Border>-->
                                             </DataTemplate>
                                         </ItemsControl.ItemTemplate>
                                     </ItemsControl>
