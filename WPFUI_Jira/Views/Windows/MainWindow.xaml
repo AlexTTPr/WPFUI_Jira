@@ -7,10 +7,10 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
     Title="{Binding ViewModel.ApplicationTitle, Mode=OneWay}"
-    MinWidth="500"
-    MinHeight="300"
     Width="1100"
     Height="650"
+    MinWidth="500"
+    MinHeight="300"
     d:DataContext="{d:DesignInstance local:MainWindow,
                                      IsDesignTimeCreatable=True}"
     d:DesignHeight="450"
@@ -25,25 +25,25 @@
     mc:Ignorable="d">
 
     <Grid>
-        <ui:TitleBar
-            x:Name="TitleBar"
-            Title="{Binding ViewModel.ApplicationTitle}">
-            <ui:TitleBar.Icon>
-                <ui:ImageIcon Source="pack://application:,,,/Assets/wpfui-icon-256.png" />
-            </ui:TitleBar.Icon>
-        </ui:TitleBar>
+        <ui:TitleBar x:Name="TitleBar"/>
+        <DockPanel Height="25" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="50, 15" >
+            <ui:ImageIcon Height="20" VerticalAlignment="Top" Width="20" Source="pack://application:,,,/Assets/wpfui-icon-256.png" />
+            <Label Margin="10, 0, 0, 0" Content="MyJira"/>
+        </DockPanel>
+        
 
         <ui:NavigationView
             x:Name="NavigationView"
             BreadcrumbBar="{Binding ElementName=BreadcrumbBar}"
             FooterMenuItemsSource="{Binding ViewModel.FooterMenuItems, Mode=OneWay}"
             FrameMargin="0"
-            IsBackButtonVisible="Visible"
             IsPaneToggleVisible="True"
             MenuItemsSource="{Binding ViewModel.MenuItems, Mode=OneWay}"
-            OpenPaneLength="310"
+            OpenPaneLength="200"
+            CompactPaneLength="100"
             PaneDisplayMode="Left"
-            TitleBar="{Binding ElementName=TitleBar, Mode=OneWay}">
+            TitleBar="{Binding ElementName=TitleBar, Mode=OneWay}"
+            IsBackButtonVisible="Visible">
             <ui:NavigationView.Header>
                 <ui:BreadcrumbBar x:Name="BreadcrumbBar" />
             </ui:NavigationView.Header>
