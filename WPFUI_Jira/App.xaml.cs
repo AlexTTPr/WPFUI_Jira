@@ -57,6 +57,7 @@ public partial class App
 			services.AddSingleton<ITaskBoardService, TaskBoardService>();
 			services.AddSingleton<ITaskListService, TaskListService>();
 			services.AddSingleton<ITaskCardService, TaskCardService>();
+			services.AddSingleton<ITaskCardStore, TaskCardStore>();
 
 			services.AddSingleton<ProjectsView>();
 			services.AddSingleton<ProjectsViewModel>();

@@ -21,12 +21,15 @@ using WPFUI_Jira.Models.Services.Interfaces;
 using WPFUI_Jira.Models.Stores.Interfaces;
 using WPFUI_Jira.Models.Stores;
 using WPFUI_Jira.Models.Services;
+using System.Windows.Controls;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace WPFUI_Jira.ViewModels;
 
 public partial class TaskBoardViewModel : BaseViewModel, IDropTarget
 {
 	public IAuthenticationService AuthenticationService { get; init; }
+	public IContentDialogService ContentDialogService {  get; init; }
 
 	private StandardKernel _kernel;
 
@@ -50,10 +53,11 @@ public partial class TaskBoardViewModel : BaseViewModel, IDropTarget
 	private TaskBoard _taskBoard;
 
 
-	public TaskBoardViewModel(IAuthenticationService authenticationService, IProjectStore projectStore, INavigationService navigationService) : base(navigationService)
+	public TaskBoardViewModel(IAuthenticationService authenticationService, IContentDialogService contentDialogService, IProjectStore projectStore, INavigationService navigationService) : base(navigationService)
 	{
 		_projectStore = projectStore;
 		AuthenticationService = authenticationService;
+		ContentDialogService = contentDialogService;
 
         _kernel = new StandardKernel(new NinjectRegistration());
 
@@ -83,6 +87,33 @@ public partial class TaskBoardViewModel : BaseViewModel, IDropTarget
 		if (!IsOwnerOrExecutor(taskCard))
 			return;
 		Debug.WriteLine("Edited...");
+	}
+
+	[RelayCommand]
+	public async void ViewTaskDetails(object[] values)
+	{
+		var content = (Panel)values[0];
+		var taskCard = (TaskCard)values[1];
+
+		var taskCardStore = App.AppHost.Services.GetService<ITaskCardStore>();
+		taskCardStore.CurrentTaskCard = taskCard;
+
+		content.DataContext = new TaskCardDetailsViewModel(App.AppHost.Services.GetService<ITaskCardStore>(), App.AppHost.Services.GetService<INavigationService>());
+
+		//var content = new StackPanel();
+		//content.Children.Add(new Label() { Content = "Описание" });
+		//content.Children.Add(new TextBlock() { Text = taskCard.Description, IsEnabled=false});
+		//content.Children.Add(new Label() { Content = "Исполнитель" });
+		//content.Children.Add(new TextBox() { Text = taskCard.Executor != null ? taskCard.Executor.ToString() : "Не назначен"});
+
+		var result = await ContentDialogService.ShowSimpleDialogAsync(
+			new SimpleContentDialogCreateOptions()
+			{
+				Title = taskCard.Title,
+				Content = content,
+				CloseButtonText = "Close"
+			}
+			);
 	}
 
     [RelayCommand]
@@ -129,7 +160,7 @@ public partial class TaskBoardViewModel : BaseViewModel, IDropTarget
             }
         }
 
-		Debug.WriteLine(dropInfo.TargetItem.ToString());
+		Debug.WriteLine(dropInfo.TargetItem?.ToString());
 	}
 
 	void IDropTarget.Drop(IDropInfo dropInfo)

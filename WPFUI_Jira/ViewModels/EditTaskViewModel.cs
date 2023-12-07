@@ -5,6 +5,8 @@ using System;
 using WPFUI_Jira.Models;
 using WPFUI_Jira.Models.Ninject;
 using WPFUI_Jira.Models.Services.Interfaces;
+using WPFUI_Jira.Models.Stores;
+using WPFUI_Jira.Models.Stores.Interfaces;
 
 namespace WPFUI_Jira.ViewModels;
 
@@ -14,10 +16,12 @@ public partial class EditTaskViewModel : BaseViewModel
 
 	public TaskCard TaskCard { get; set; }
 
-	public Project Project { get; set; }
+	public Project Project => _projectStore.CurrentProject;
 
 	private StandardKernel _kernel;
 
+	private IContentDialogService _contentDialogService;
+	private IProjectStore _projectStore;
 	private ITaskCardService _taskCardService;
 
 	private IUserService _userService;
@@ -40,11 +44,13 @@ public partial class EditTaskViewModel : BaseViewModel
 	[ObservableProperty]
 	private DateTime? _creationTime;
 
-	public EditTaskViewModel(IAuthenticationService authenticationService, Project project, TaskCard taskCard, NavigationService navigationService) : base(navigationService)
+	public EditTaskViewModel(IAuthenticationService authenticationService, IContentDialogService contentDialogService, IProjectStore projectStore, TaskCard taskCard, INavigationService navigationService) : base(navigationService)
 	{
+		AuthenticationService = authenticationService;
 		TaskCard = taskCard;
-		Project = project;
 
+		_contentDialogService = contentDialogService;
+		_projectStore = projectStore;
 		_kernel = new StandardKernel(new NinjectRegistration());
 		_taskCardService = _kernel.Get<ITaskCardService>();
 		_userService = _kernel.Get<IUserService>();
