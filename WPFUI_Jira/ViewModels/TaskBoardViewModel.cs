@@ -64,7 +64,7 @@ public partial class TaskBoardViewModel : BaseViewModel, IDropTarget
 		Project = _projectStore.CurrentProject;
 		Project.TaskBoard = _taskBoardService.GetTaskBoards(Project.Id).First();
         
-		LoadTasks();
+		LoadTaskBoardData();
 	}
 
     [RelayCommand]
@@ -121,14 +121,14 @@ public partial class TaskBoardViewModel : BaseViewModel, IDropTarget
 				taskCard.CreationTime = CreationTime;
 
 				_taskCardService.UpdateTaskCard(taskCard);
-				LoadTasks();
+				LoadTaskBoardData();
 				break;
 			case Wpf.Ui.Controls.ContentDialogResult.None:
 				break;
 		}
 	}
 
-	void LoadTasks()
+	void LoadTaskBoardData()
 	{
 		TaskBoard = null;
 		TaskBoard = Project.TaskBoard;

@@ -20,7 +20,7 @@ public partial class MainWindowViewModel : ObservableObject
 		{
 			new NavigationViewItem()
 			{
-				Content = "Projects",
+				Content = "Проекты",
 				Icon = new SymbolIcon { Symbol = SymbolRegular.DataHistogram24 },
 				TargetPageType = typeof(ProjectsView)
 			}
@@ -31,7 +31,7 @@ public partial class MainWindowViewModel : ObservableObject
 		{
 			new NavigationViewItem()
 			{
-				Content = "Settings",
+				Content = "Настройки",
 				Icon = new SymbolIcon { Symbol = SymbolRegular.Settings24 },
 				TargetPageType = typeof(Views.Pages.SettingsPage)
 			}

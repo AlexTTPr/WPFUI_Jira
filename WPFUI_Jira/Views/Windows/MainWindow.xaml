@@ -35,7 +35,7 @@
     <Grid>
         <ui:TitleBar x:Name="TitleBar"/>
         <DockPanel Height="25" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="50, 15" >
-            <ui:ImageIcon Height="20" VerticalAlignment="Top" Width="20" Source="pack://application:,,,/Assets/wpfui-icon-256.png" />
+            <ui:ImageIcon Height="20" VerticalAlignment="Top" Width="20" Source="../../Resources/Images/applogo.png" />
             <Label Margin="10, 0, 0, 0" Content="MyJira"/>
         </DockPanel>
 
