@@ -23,17 +23,25 @@
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
 
+    <ui:FluentWindow.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ui:ThemesDictionary Theme="Dark" />
+                <ui:ControlsDictionary />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </ui:FluentWindow.Resources>
+
     <Grid>
         <ui:TitleBar x:Name="TitleBar"/>
         <DockPanel Height="25" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="50, 15" >
             <ui:ImageIcon Height="20" VerticalAlignment="Top" Width="20" Source="pack://application:,,,/Assets/wpfui-icon-256.png" />
             <Label Margin="10, 0, 0, 0" Content="MyJira"/>
         </DockPanel>
-        
+
 
         <ui:NavigationView
             x:Name="NavigationView"
-            BreadcrumbBar="{Binding ElementName=BreadcrumbBar}"
             FooterMenuItemsSource="{Binding ViewModel.FooterMenuItems, Mode=OneWay}"
             FrameMargin="0"
             IsPaneToggleVisible="True"
@@ -43,9 +51,6 @@
             PaneDisplayMode="Left"
             TitleBar="{Binding ElementName=TitleBar, Mode=OneWay}"
             IsBackButtonVisible="Visible">
-            <ui:NavigationView.Header>
-                <ui:BreadcrumbBar x:Name="BreadcrumbBar" />
-            </ui:NavigationView.Header>
             <ui:NavigationView.ContentOverlay>
                 <Grid>
                     <ui:SnackbarPresenter x:Name="SnackbarPresenter" />

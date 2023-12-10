@@ -39,13 +39,8 @@ public partial class TaskBoardViewModel : BaseViewModel, IDropTarget
     private ITaskListService _taskListService;
     private ITaskCardService _taskCardService;
 
-    private Project Project
-	{
-		get
-		{
-			return _projectStore.CurrentProject;
-		}
-	}
+	[ObservableProperty]
+	private Project _project;
 
 	public bool IsOwner => Project.Owner.Id == AuthenticationService.AccountStore.CurrentUser.Id;
 
@@ -66,13 +61,10 @@ public partial class TaskBoardViewModel : BaseViewModel, IDropTarget
 		_taskCardService = _kernel.Get<ITaskCardService>();
         _taskListService = _kernel.Get<ITaskListService>();
 
-        Project.TaskBoard = _taskBoardService.GetTaskBoards(Project.Id).First();
-        TaskBoard = Project.TaskBoard;
-
-		TaskBoard.TaskLists = new ObservableCollection<TaskList>(_taskListService.GetTaskLists(TaskBoard.Id));
-
-        foreach (var taskList in TaskBoard.TaskLists)
-            taskList.TaskCards = new ObservableCollection<TaskCard>(_taskCardService.GetTaskCards(taskList.Id));
+		Project = _projectStore.CurrentProject;
+		Project.TaskBoard = _taskBoardService.GetTaskBoards(Project.Id).First();
+        
+		LoadTasks();
 	}
 
     [RelayCommand]
@@ -98,29 +90,69 @@ public partial class TaskBoardViewModel : BaseViewModel, IDropTarget
 		var taskCardStore = App.AppHost.Services.GetService<ITaskCardStore>();
 		taskCardStore.CurrentTaskCard = taskCard;
 
-		content.DataContext = new TaskCardDetailsViewModel(App.AppHost.Services.GetService<ITaskCardStore>(), App.AppHost.Services.GetService<INavigationService>());
+		content.DataContext = this;
 
-		//var content = new StackPanel();
-		//content.Children.Add(new Label() { Content = "Описание" });
-		//content.Children.Add(new TextBlock() { Text = taskCard.Description, IsEnabled=false});
-		//content.Children.Add(new Label() { Content = "Исполнитель" });
-		//content.Children.Add(new TextBox() { Text = taskCard.Executor != null ? taskCard.Executor.ToString() : "Не назначен"});
+		Title = taskCard.Title;
+		Description = taskCard.Description;
+		Executor = taskCard.Executor;
+		ExpirationTime = taskCard.ExpirationTime;
+		CreationTime = taskCard.CreationTime;
 
-		var result = await ContentDialogService.ShowSimpleDialogAsync(
-			new SimpleContentDialogCreateOptions()
-			{
-				Title = taskCard.Title,
-				Content = content,
-				CloseButtonText = "Close"
-			}
-			);
+		var dialogOptions = new SimpleContentDialogCreateOptions()
+		{
+			Title = string.Empty,
+			Content = content,
+			CloseButtonText = "Close"
+		};
+
+		if (IsOwner)
+		{
+			dialogOptions.PrimaryButtonText = "Сохранить Изменения";
+		}
+		var result = await ContentDialogService.ShowSimpleDialogAsync(dialogOptions);
+
+		switch (result)
+		{
+			case Wpf.Ui.Controls.ContentDialogResult.Primary:
+				taskCard.Title = Title;
+				taskCard.Description = Description;
+				taskCard.Executor = Executor;
+				taskCard.ExpirationTime = ExpirationTime;
+				taskCard.CreationTime = CreationTime;
+
+				_taskCardService.UpdateTaskCard(taskCard);
+				LoadTasks();
+				break;
+			case Wpf.Ui.Controls.ContentDialogResult.None:
+				break;
+		}
 	}
 
-    [RelayCommand]
-    public void GoBack()
-    {
+	void LoadTasks()
+	{
+		TaskBoard = null;
+		TaskBoard = Project.TaskBoard;
 
-    }
+		TaskBoard.TaskLists = new ObservableCollection<TaskList>(_taskListService.GetTaskLists(TaskBoard.Id));
+
+		foreach (var taskList in TaskBoard.TaskLists)
+			taskList.TaskCards = new ObservableCollection<TaskCard>(_taskCardService.GetTaskCards(taskList.Id));
+	}
+
+	[ObservableProperty]
+	private string _title;
+
+	[ObservableProperty]
+	private string? _description;
+
+	[ObservableProperty]
+	private User? _executor;
+
+	[ObservableProperty]
+	private DateTime? _expirationTime;
+
+	[ObservableProperty]
+	private DateTime _creationTime;
 
 	bool IsOwnerOrExecutor(TaskCard taskCard)
 	{
@@ -128,7 +160,8 @@ public partial class TaskBoardViewModel : BaseViewModel, IDropTarget
 		return IsOwner || taskCard.Executor?.Id == AuthenticationService.AccountStore.CurrentUser.Id;
 	}
 
-    public void DragOver(IDropInfo dropInfo)
+	#region DragAndDrop
+	public void DragOver(IDropInfo dropInfo)
     {
         if (dropInfo.Data is TaskList dropList)
         {
@@ -209,4 +242,5 @@ public partial class TaskBoardViewModel : BaseViewModel, IDropTarget
 			}
         }
     }
+	#endregion
 }
