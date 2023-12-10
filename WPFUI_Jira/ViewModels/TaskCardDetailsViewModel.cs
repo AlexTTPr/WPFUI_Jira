@@ -18,7 +18,7 @@ public partial class TaskCardDetailsViewModel : BaseViewModel
 
 	private readonly ITaskCardService _taskCardService;
 
-	public bool UserCanRedact => _projectStore.CurrentProject.Owner.Id == _accountStore.CurrentUser.Id;
+	public bool IsOwner => _projectStore.CurrentProject.Owner.Id == _accountStore.CurrentUser.Id;
 
 	[ObservableProperty]
 	private string _title;
@@ -33,7 +33,7 @@ public partial class TaskCardDetailsViewModel : BaseViewModel
 	private DateTime? _expirationTime;
 
 	[ObservableProperty]
-	private DateTime? _creationTime;
+	private DateTime _creationTime;
 
 	public TaskCardDetailsViewModel(ITaskCardStore taskCardStore, IProjectStore projectStore, IAccountStore accountStore, ITaskCardService taskCardService,INavigationService navigationService) : base(navigationService)
 	{

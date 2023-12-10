@@ -5,50 +5,81 @@
     xmlns:conv="clr-namespace:System.Windows.Converters;assembly=WindowsBase"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:dd="urn:gong-wpf-dragdrop"
+    xmlns:helpers="clr-namespace:WPFUI_Jira.Helpers"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
-    xmlns:viewmodels="clr-namespace:WPFUI_Jira.ViewModels"
-    xmlns:helpers="clr-namespace:WPFUI_Jira.Helpers"
     xmlns:views="clr-namespace:WPFUI_Jira.Views"
+    xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+    Title="TaskBoard"
     d:DesignHeight="450"
     d:DesignWidth="800"
-    mc:Ignorable="d"
-    Title="TaskBoard">
+    mc:Ignorable="d">
 
     <Page.Resources>
         <ResourceDictionary>
-            <BooleanToVisibilityConverter x:Key="VisibilityOfBool"/>
-            <helpers:MultiValueConverter x:Key="MultiValueConverter"/>
-            <StackPanel x:Key="DialogContent"
-                        Width="500"
-                        Height="300">
+            <BooleanToVisibilityConverter x:Key="VisibilityOfBool" />
+            <helpers:MultiValueConverter x:Key="MultiValueConverter" />
+            <StackPanel
+                x:Key="ViewDetailsCD"
+                Width="500"
+                Height="350">
                 <Label Content="Название" />
-                <ui:TextBox Text="{Binding Title}"
-                            TextWrapping="Wrap"
-                            IsEnabled="{Binding IsOwner}"/>
+                <ui:TextBox
+                    IsEnabled="{Binding IsOwner}"
+                    Text="{Binding Title}"
+                    TextWrapping="Wrap" />
                 <Label Content="Описание" />
-                <ui:TextBox Text="{Binding Description}"
-                            PlaceholderEnabled="True"
-                            PlaceholderText="Описание отсутствует"
-                            TextWrapping="Wrap"
-                            Height="100"
-                            IsEnabled="{Binding IsOwner}"/>
+                <ui:TextBox
+                    Height="100"
+                    IsEnabled="{Binding IsOwner}"
+                    PlaceholderEnabled="True"
+                    PlaceholderText="Описание отсутствует"
+                    Text="{Binding Description}"
+                    TextWrapping="Wrap" />
                 <Label Content="Исполнитель" />
-                <ui:TextBox Text="{Binding Executor.Name}"
-                            PlaceholderEnabled="True"
-                            PlaceholderText="Исполнитель не назначен"
-                            IsEnabled="{Binding IsOwner}"/>
-                <Label Content="{Binding CreationTime}"
-                       ContentStringFormat="Задача была создана {0}"/>
-                <Label Content="{Binding ExpirationTime}"
-                       ContentStringFormat="Срок выполнения истекает в: {0}"/>
+                <ui:TextBox
+                    IsEnabled="{Binding IsOwner}"
+                    PlaceholderEnabled="True"
+                    PlaceholderText="Исполнитель не назначен"
+                    Text="{Binding Executor.Name}" />
+                <Label Content="{Binding CreationTime}" ContentStringFormat="Задача была создана {0}" />
+                <Label Content="{Binding ExpirationTime}" ContentStringFormat="Срок выполнения истекает в: {0}" />
+            </StackPanel>
+            <StackPanel
+                x:Key="CreateTaskCD"
+                Width="500"
+                Height="300">
+                <Label Content="Название" />
+                <ui:TextBox Text="{Binding Title}" TextWrapping="Wrap" />
+                <Label Content="Описание" />
+                <ui:TextBox
+                    Height="100"
+                    IsEnabled="{Binding IsOwner}"
+                    PlaceholderEnabled="True"
+                    PlaceholderText="Описание отсутствует"
+                    Text="{Binding Description}"
+                    TextWrapping="Wrap" />
+                <Label Content="Исполнитель" />
+                <ui:TextBox
+                    PlaceholderEnabled="True"
+                    PlaceholderText="Исполнитель не назначен"
+                    Text="{Binding Executor.Name}" />
+                <Label Content="Выберите срок выполнения задачи или оставьте поле пустым если у здачи нет срока выполнения" />
+                <DockPanel>
+                    <DatePicker
+                        SelectedDate="{Binding Date}"/>
+                    <ui:TextBox
+                        PlaceholderEnabled="True"
+                        PlaceholderText="Введите время (hh:mm:ss)"
+                        Text="{Binding Time}"/>
+                </DockPanel>
             </StackPanel>
         </ResourceDictionary>
     </Page.Resources>
 
     <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Hidden">
         <StackPanel>
-            <ui:TextBlock FontTypography="Subtitle" Text="{Binding Title}"/>
+            <ui:TextBlock FontTypography="Subtitle" Text="{Binding Title}" />
             <DockPanel>
                 <ui:VirtualizingItemsControl
                     x:Name="ItemsControl"
@@ -127,16 +158,16 @@
                                             <DataTemplate>
                                                 <ui:CardAction
                                                     MinHeight="75"
-                                                    HorizontalAlignment="Stretch"
                                                     Margin="0,5,0,5"
                                                     Padding="5"
+                                                    HorizontalAlignment="Stretch"
                                                     VerticalAlignment="Top"
                                                     Command="{Binding DataContext.ViewModel.ViewTaskDetailsCommand, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}, AncestorLevel=2}}"
                                                     IsChevronVisible="False">
                                                     <ui:CardAction.CommandParameter>
                                                         <MultiBinding Converter="{StaticResource MultiValueConverter}">
-                                                            <Binding Source="{StaticResource DialogContent}"/>
-                                                            <Binding BindsDirectlyToSource="True"/>
+                                                            <Binding Source="{StaticResource ViewDetailsCD}" />
+                                                            <Binding BindsDirectlyToSource="True" />
                                                         </MultiBinding>
                                                     </ui:CardAction.CommandParameter>
                                                     <Grid>
@@ -240,12 +271,12 @@
                                         </ui:VirtualizingItemsControl.ItemTemplate>
                                     </ui:VirtualizingItemsControl>
                                     <ui:Button
+                                        Margin="0,5"
+                                        HorizontalAlignment="Stretch"
+                                        Appearance="Dark"
                                         Command="{Binding DataContext.ViewModel.CreateTaskCommand, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"
                                         CommandParameter="{Binding}"
-                                        HorizontalAlignment="Stretch"
                                         Content="+"
-                                        Margin="0, 5"
-                                        Appearance="Dark"                                        
                                         Visibility="{Binding DataContext.ViewModel.IsOwner, Converter={StaticResource VisibilityOfBool}, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
                                 </StackPanel>
                             </Border>

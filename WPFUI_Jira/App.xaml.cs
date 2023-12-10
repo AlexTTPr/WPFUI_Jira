@@ -5,6 +5,7 @@
 
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
 using System.IO;
 using System.Net;
@@ -63,6 +64,8 @@ public partial class App
 			services.AddSingleton<ProjectsViewModel>();
 			services.AddSingleton<TaskBoardView>();
 			services.AddSingleton<TaskBoardViewModel>();
+
+			services.AddSingleton<TaskCardDetailsViewModel>();
 
 			services.AddSingleton<DashboardPage>();
 			services.AddSingleton<DashboardViewModel>();

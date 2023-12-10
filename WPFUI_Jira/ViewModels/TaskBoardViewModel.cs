@@ -67,12 +67,6 @@ public partial class TaskBoardViewModel : BaseViewModel, IDropTarget
 		LoadTaskBoardData();
 	}
 
-    [RelayCommand]
-    public void CreateTask(TaskList taskList)
-    {
-
-    }
-
 	[RelayCommand]
 	public void EditTask(TaskCard taskCard)
 	{
@@ -81,6 +75,7 @@ public partial class TaskBoardViewModel : BaseViewModel, IDropTarget
 		Debug.WriteLine("Edited...");
 	}
 
+	//FUUUUUUUUUUUUUUUUUUK
 	[RelayCommand]
 	public async void ViewTaskDetails(object[] values)
 	{
@@ -90,13 +85,7 @@ public partial class TaskBoardViewModel : BaseViewModel, IDropTarget
 		var taskCardStore = App.AppHost.Services.GetService<ITaskCardStore>();
 		taskCardStore.CurrentTaskCard = taskCard;
 
-		content.DataContext = this;
-
-		Title = taskCard.Title;
-		Description = taskCard.Description;
-		Executor = taskCard.Executor;
-		ExpirationTime = taskCard.ExpirationTime;
-		CreationTime = taskCard.CreationTime;
+		content.DataContext = App.AppHost.Services.GetService<TaskCardDetailsViewModel>();
 
 		var dialogOptions = new SimpleContentDialogCreateOptions()
 		{
@@ -114,18 +103,19 @@ public partial class TaskBoardViewModel : BaseViewModel, IDropTarget
 		switch (result)
 		{
 			case Wpf.Ui.Controls.ContentDialogResult.Primary:
-				taskCard.Title = Title;
-				taskCard.Description = Description;
-				taskCard.Executor = Executor;
-				taskCard.ExpirationTime = ExpirationTime;
-				taskCard.CreationTime = CreationTime;
-
-				_taskCardService.UpdateTaskCard(taskCard);
+				_taskCardService.UpdateTaskCard(taskCardStore.CurrentTaskCard);
 				LoadTaskBoardData();
 				break;
 			case Wpf.Ui.Controls.ContentDialogResult.None:
 				break;
 		}
+	}
+
+	[RelayCommand]
+	public void CreateTask(object[] values)
+	{
+		var content = (Panel)values[0];
+		var taskCard = (TaskList)values[1];
 	}
 
 	void LoadTaskBoardData()
@@ -138,21 +128,6 @@ public partial class TaskBoardViewModel : BaseViewModel, IDropTarget
 		foreach (var taskList in TaskBoard.TaskLists)
 			taskList.TaskCards = new ObservableCollection<TaskCard>(_taskCardService.GetTaskCards(taskList.Id));
 	}
-
-	[ObservableProperty]
-	private string _title;
-
-	[ObservableProperty]
-	private string? _description;
-
-	[ObservableProperty]
-	private User? _executor;
-
-	[ObservableProperty]
-	private DateTime? _expirationTime;
-
-	[ObservableProperty]
-	private DateTime _creationTime;
 
 	bool IsOwnerOrExecutor(TaskCard taskCard)
 	{

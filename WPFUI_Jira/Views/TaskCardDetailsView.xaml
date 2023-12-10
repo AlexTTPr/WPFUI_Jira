@@ -12,21 +12,26 @@
     mc:Ignorable="d">
 
     <StackPanel Width="500" Height="300">
+        <Label Content="Название" />
+        <ui:TextBox
+            IsEnabled="{Binding IsOwner}"
+            Text="{Binding Title}"
+            TextWrapping="Wrap" />
         <Label Content="Описание" />
         <ui:TextBox
             Height="100"
-            IsEnabled="{Binding UserCanRedact}"
+            IsEnabled="{Binding IsOwner}"
             PlaceholderEnabled="True"
             PlaceholderText="Описание отсутствует"
             Text="{Binding Description}"
             TextWrapping="Wrap" />
         <Label Content="Исполнитель" />
         <ui:TextBox
-            IsEnabled="{Binding UserCanRedact}"
+            IsEnabled="{Binding IsOwner}"
             PlaceholderEnabled="True"
             PlaceholderText="Исполнитель не назначен"
             Text="{Binding Executor.Name}" />
         <Label Content="{Binding CreationTime}" ContentStringFormat="Задача была создана {0}" />
-        <Label Content="{Binding ExpirationTime}" ContentStringFormat="Срок выполнения истекает в {0}" />
+        <Label Content="{Binding ExpirationTime}" ContentStringFormat="Срок выполнения истекает в: {0}" />
     </StackPanel>
 </ui:ContentDialog>
