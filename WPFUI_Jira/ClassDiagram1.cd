@@ -1,0 +1,401 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="WPFUI_Jira.Views.Pages.SettingsPage" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="8.25" Y="9.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Views\Pages\SettingsPage.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="WPFUI_Jira.Views.Windows.MainWindow" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="4.75" Y="9.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Views\Windows\MainWindow.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="WPFUI_Jira.Views.CreateTaskView" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="8.25" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Views\CreateTaskView.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="WPFUI_Jira.Views.EditTaskView" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="10" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Views\EditTaskView.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="WPFUI_Jira.Views.ProjectsView" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="6.5" Y="9.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Views\ProjectsView.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="WPFUI_Jira.Views.TaskBoardView" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="4.75" Y="10.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAIAAAAAAAAAAAAEAAAQAAAAAAAAAAAAAI=</HashCode>
+      <FileName>Views\TaskBoardView.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="WPFUI_Jira.Views.TaskCardDetailsView" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="6.5" Y="10.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Views\TaskCardDetailsView.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="WPFUI_Jira.ViewModels.Pages.SettingsViewModel" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="10" Y="9.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAAQAAAAAAAAAAAAAAQAAAAIAAQAAAAAQQAAABA=</HashCode>
+      <FileName>ViewModels\Pages\SettingsViewModel.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="WPFUI_Jira.ViewModels.BaseViewModel" Collapsed="true">
+    <Position X="7" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAAAAAAIAAAAAAIAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\BaseViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WPFUI_Jira.ViewModels.CreateTaskViewModel" Collapsed="true">
+    <Position X="10.5" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAAAAAQIAAAAgEEAAAGAAQAAAAACBAAAAEAIAAAAA=</HashCode>
+      <FileName>ViewModels\CreateTaskViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WPFUI_Jira.ViewModels.EditTaskViewModel" Collapsed="true">
+    <Position X="1.5" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAAAgAQIAAAAgEEAAAGAASABAAAAAAAAAEAKAAEAg=</HashCode>
+      <FileName>ViewModels\EditTaskViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WPFUI_Jira.ViewModels.MainViewModel" Collapsed="true">
+    <Position X="3.75" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAA=</HashCode>
+      <FileName>ViewModels\MainViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WPFUI_Jira.ViewModels.ProjectsViewModel" Collapsed="true">
+    <Position X="6" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAABAAAAAAAgAACAAEAAAAAAAAIAAAAAEAAAAABA=</HashCode>
+      <FileName>ViewModels\ProjectsViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WPFUI_Jira.ViewModels.TaskBoardViewModel" Collapsed="true">
+    <Position X="8.25" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAgAVAIACBgBECIAEAAAAAAAAABAAAAEAGAAABA=</HashCode>
+      <FileName>ViewModels\TaskBoardViewModel.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="WPFUI_Jira.ViewModels.TaskCardDetailsViewModel" Collapsed="true">
+    <Position X="12.75" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>iAAAgAAAAIBAAAAEEAAAAAAQAAEAAAAAAAAAAKAAUAA=</HashCode>
+      <FileName>ViewModels\TaskCardDetailsViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WPFUI_Jira.Services.ApplicationHostService" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="6.5" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAgAAAAAAAAAAAACAQAAAAABgAA=</HashCode>
+      <FileName>Services\ApplicationHostService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="WPFUI_Jira.App" Collapsed="true">
+    <Position X="4.75" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAABAAAAAAAAAAAAAAAAAAQAAAAAAAAAEAAAEA=</HashCode>
+      <FileName>App.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WPFUI_Jira.Models.Services.AuthenticationService" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="20" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAABAAAIAAAABAAAAAAASAAAAAAA=</HashCode>
+      <FileName>Models\Services\AuthenticationService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="WPFUI_Jira.Models.Services.ProjectService" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="20" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgIAAAAABAAAAAAAAAgAAAAAAAAAAAgAIAAAACAA=</HashCode>
+      <FileName>Models\Services\ProjectService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="WPFUI_Jira.Models.Services.TaskBoardService" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="18.25" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgICAAAAAIAAAAAAAAAAACAAQAACAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Services\TaskBoardService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="WPFUI_Jira.Models.Services.TaskCardService" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="14.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAgIAAACAAAAAAAAAAAAAAAKAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Services\TaskCardService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="WPFUI_Jira.Models.Services.TaskListService" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="21.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgIAAAAAAACAAAAAAAAACAAAAACAAAAAAAAAgAAA=</HashCode>
+      <FileName>Models\Services\TaskListService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="WPFUI_Jira.Models.Services.UserService" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="18.25" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAgIAAAQAAAAAEAAAAAAAAAQAAAAAAEAAAAAAAAAA=</HashCode>
+      <FileName>Models\Services\UserService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="WPFUI_Jira.Models.Repository.ApplicationContext" Collapsed="true">
+    <Position X="18.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAACAAAQAAAAAAAAAAAAACEAAAADAIAAAAAAAAAQA=</HashCode>
+      <FileName>Models\Repository\ApplicationContext.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WPFUI_Jira.Models.Repository.DbRepos" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="21.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAKAgAEIABAAAAAAAAAACAAAAgDAABAAAAAAAAQA=</HashCode>
+      <FileName>Models\Repository\DbRepos.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="WPFUI_Jira.Models.Repository.ProjectRepository" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="18.25" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAABEAAAAAAAAAAAAEAAEAAAAAAAEAAAAA=</HashCode>
+      <FileName>Models\Repository\ProjectRepository.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="WPFUI_Jira.Models.Repository.TaskBoardRepository" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="16.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAABEAAAAAAAAAAAAEAAEAAAAAAAEAAAAA=</HashCode>
+      <FileName>Models\Repository\TaskBoardRepository.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="WPFUI_Jira.Models.Repository.TaskCardRepository" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="21.75" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAABEAAAAAAAAAAAAEAAEAAAAAAAEAAAAA=</HashCode>
+      <FileName>Models\Repository\TaskCardRepository.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="WPFUI_Jira.Models.Repository.TaskListRepository" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="20" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAABEAAAAAAAAAAAAEAAEAAAAAAAEAAAAA=</HashCode>
+      <FileName>Models\Repository\TaskListRepository.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="WPFUI_Jira.Models.Repository.UserRepository" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="16.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAABEAAAAAAAAAAAAEAAEAAAAAAAEAAAAA=</HashCode>
+      <FileName>Models\Repository\UserRepository.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="WPFUI_Jira.Models.Stores.AccountStore" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="14.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAIAAAAAAAEAAAAAAAAAAAAAAAAEAAAAAAAA=</HashCode>
+      <FileName>Models\Stores\AccountStore.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="WPFUI_Jira.Models.Stores.NavigationStore" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="14.75" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAACAAAAAAAEAAAAAAAAAAAAAAAAAAAgAAAAAAAAA=</HashCode>
+      <FileName>Models\Stores\NavigationStore.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="WPFUI_Jira.Models.Stores.ProjectStore" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="21.75" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Stores\ProjectStore.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="WPFUI_Jira.Models.Stores.TaskCardStore" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="16.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Stores\TaskCardStore.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="WPFUI_Jira.Models.ActionRecord" Collapsed="true">
+    <Position X="16.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CgACAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\ActionRecord.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WPFUI_Jira.Models.Project" Collapsed="true">
+    <Position X="16.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAACAAAAgAEAAAAAAAAAAAAAAAAAAAAAggAAAAAA=</HashCode>
+      <FileName>Models\Project.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WPFUI_Jira.Models.TaskBoard" Collapsed="true">
+    <Position X="14.75" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAACAAAAAAEAAAAAAAAAAAAAAACAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\TaskBoard.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WPFUI_Jira.Models.TaskCard" Collapsed="true">
+    <Position X="20" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAIAAgAEQAAAAAAIAAAAAAAAAAAAACgAAAAAA=</HashCode>
+      <FileName>Models\TaskCard.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WPFUI_Jira.Models.TaskList" Collapsed="true">
+    <Position X="18.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAEAAAAAAAAACAAAAAAAAAQAAgAAAAAA=</HashCode>
+      <FileName>Models\TaskList.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WPFUI_Jira.Models.User" Collapsed="true">
+    <Position X="14.75" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAACAAAAAEAAAAAAQAAAAAAAAAAAIYAAAAAAA=</HashCode>
+      <FileName>Models\User.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="WPFUI_Jira.Models.Services.Interfaces.IAuthenticationService" Collapsed="true">
+    <Position X="16.5" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAABAAAIAAAABAAAAAAASAAAAAAA=</HashCode>
+      <FileName>Models\Services\Interfaces\IAuthenticationService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="WPFUI_Jira.Models.Services.Interfaces.IProjectService" Collapsed="true">
+    <Position X="21.75" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAABAAAAAAAAAgAAAAAAAAAAAgAIAAAACAA=</HashCode>
+      <FileName>Models\Services\Interfaces\IProjectService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="WPFUI_Jira.Models.Services.Interfaces.ITaskBoardService" Collapsed="true">
+    <Position X="18.25" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAAAAIAAAAAAAAAAACAAQAACAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Services\Interfaces\ITaskBoardService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="WPFUI_Jira.Models.Services.Interfaces.ITaskCardService" Collapsed="true">
+    <Position X="20" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAAAAAACAAAAAAAAAAAAAAAKAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Services\Interfaces\ITaskCardService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="WPFUI_Jira.Models.Services.Interfaces.ITaskListService" Collapsed="true">
+    <Position X="14.75" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAACAAAAAAAAACAAAAACAAAAAAAAAgAAA=</HashCode>
+      <FileName>Models\Services\Interfaces\ITaskListService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="WPFUI_Jira.Models.Services.Interfaces.IUserService" Collapsed="true">
+    <Position X="16.5" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAAAQAAAAAEAAAAAAAAAQAAAAAAEAAAAAAAAAA=</HashCode>
+      <FileName>Models\Services\Interfaces\IUserService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="WPFUI_Jira.Models.Repository.Interfaces.IDbRepos" Collapsed="true">
+    <Position X="18.25" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAKAAAAAAAAAAAAAAAAACAAAAADAAAAAAAAAAAQA=</HashCode>
+      <FileName>Models\Repository\Interfaces\IDbRepos.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="WPFUI_Jira.Models.Repository.Interfaces.IRepository&lt;T&gt;" Collapsed="true">
+    <Position X="16.5" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAEAAAAAAAAAAAAEAAEAAAAAAAEAAAAA=</HashCode>
+      <FileName>Models\Repository\Interfaces\IRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="WPFUI_Jira.Models.Stores.Interfaces.IAccountStore" Collapsed="true">
+    <Position X="14.75" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAA=</HashCode>
+      <FileName>Models\Stores\Interfaces\IAccountStore.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="WPFUI_Jira.Models.Stores.Interfaces.INavigationStore" Collapsed="true">
+    <Position X="20" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAgAAAAAAAAA=</HashCode>
+      <FileName>Models\Stores\Interfaces\INavigationStore.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="WPFUI_Jira.Models.Stores.Interfaces.IProjectStore" Collapsed="true">
+    <Position X="14.75" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Stores\Interfaces\IProjectStore.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="WPFUI_Jira.Models.Stores.Interfaces.ITaskCardStore" Collapsed="true">
+    <Position X="21.75" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Stores\Interfaces\ITaskCardStore.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="WPFUI_Jira.Models.ListType" Collapsed="true">
+    <Position X="14.75" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAAEAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\ListType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

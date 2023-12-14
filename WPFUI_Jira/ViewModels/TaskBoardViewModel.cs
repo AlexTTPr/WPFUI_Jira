@@ -38,6 +38,7 @@ public partial class TaskBoardViewModel : BaseViewModel, IDropTarget
 	private ITaskBoardService _taskBoardService;
     private ITaskListService _taskListService;
     private ITaskCardService _taskCardService;
+	private IUserService _userService;
 
 	[ObservableProperty]
 	private Project _project;
@@ -60,10 +61,12 @@ public partial class TaskBoardViewModel : BaseViewModel, IDropTarget
 		_taskBoardService = _kernel.Get<ITaskBoardService>();
 		_taskCardService = _kernel.Get<ITaskCardService>();
         _taskListService = _kernel.Get<ITaskListService>();
+		_userService = _kernel.Get<IUserService>();
 
 		Project = _projectStore.CurrentProject;
+		//...
 		Project.TaskBoard = _taskBoardService.GetTaskBoards(Project.Id).First();
-        
+		Project.Workers = _userService.GetUsers(Project.Id);
 		LoadTaskBoardData();
 	}
 
@@ -85,7 +88,9 @@ public partial class TaskBoardViewModel : BaseViewModel, IDropTarget
 		var taskCardStore = App.AppHost.Services.GetService<ITaskCardStore>();
 		taskCardStore.CurrentTaskCard = taskCard;
 
-		content.DataContext = App.AppHost.Services.GetService<TaskCardDetailsViewModel>();
+		var context = App.AppHost.Services.GetService<TaskCardDetailsViewModel>();
+
+		content.DataContext = context;
 
 		var dialogOptions = new SimpleContentDialogCreateOptions()
 		{
@@ -97,13 +102,18 @@ public partial class TaskBoardViewModel : BaseViewModel, IDropTarget
 		if (IsOwner)
 		{
 			dialogOptions.PrimaryButtonText = "Сохранить Изменения";
+			dialogOptions.SecondaryButtonText = "Удалить";
 		}
 		var result = await ContentDialogService.ShowSimpleDialogAsync(dialogOptions);
 
 		switch (result)
 		{
 			case Wpf.Ui.Controls.ContentDialogResult.Primary:
-				_taskCardService.UpdateTaskCard(taskCardStore.CurrentTaskCard);
+				context.SaveChanges();
+				LoadTaskBoardData();
+				break;
+			case Wpf.Ui.Controls.ContentDialogResult.Secondary:
+				context.Delete();
 				LoadTaskBoardData();
 				break;
 			case Wpf.Ui.Controls.ContentDialogResult.None:
@@ -112,10 +122,10 @@ public partial class TaskBoardViewModel : BaseViewModel, IDropTarget
 	}
 
 	[RelayCommand]
-	public void CreateTask(object[] values)
+	public void CreateTask(TaskList taskList)
 	{
-		var content = (Panel)values[0];
-		var taskCard = (TaskList)values[1];
+		//var content = (Panel)values[0];
+		//var taskCard = (TaskList)values[1];
 	}
 
 	void LoadTaskBoardData()
@@ -131,7 +141,6 @@ public partial class TaskBoardViewModel : BaseViewModel, IDropTarget
 
 	bool IsOwnerOrExecutor(TaskCard taskCard)
 	{
-		//SUS...
 		return IsOwner || taskCard.Executor?.Id == AuthenticationService.AccountStore.CurrentUser.Id;
 	}
 

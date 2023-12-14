@@ -28,7 +28,7 @@ internal class TaskCardRepository : IRepository<TaskCard>
 			_context.TaskCards.Remove(item);
 	}
 
-	public IEnumerable<TaskCard> GetCollection(int ownerId)
+	public ICollection<TaskCard> GetCollection(int ownerId)
 	{
 		return _context.TaskCards.Where(c => c.TaskListId == ownerId).Include(c => c.Executor).ToList();
 	}

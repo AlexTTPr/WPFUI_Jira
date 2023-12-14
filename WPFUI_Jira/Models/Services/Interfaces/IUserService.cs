@@ -8,7 +8,7 @@ namespace WPFUI_Jira.Models.Services.Interfaces;
 
 internal interface IUserService
 {
-    IEnumerable<User> GetUsers(int projectId);
+    ICollection<User> GetUsers(int projectId);
 
     User GetUser(int id);
 

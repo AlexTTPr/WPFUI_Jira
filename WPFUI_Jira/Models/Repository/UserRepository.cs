@@ -28,7 +28,7 @@ internal class UserRepository : IRepository<User>
 			_context.Users.Remove(item);
 	}
 
-	public IEnumerable<User> GetCollection(int projectId)
+	public ICollection<User> GetCollection(int projectId)
 	{
 		return _context.Users.Where(c => c.WorkProjects.Any(e => e.Id == projectId)).ToList();
 	}

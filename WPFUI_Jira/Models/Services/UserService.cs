@@ -34,7 +34,7 @@ public class UserService : IUserService
         return _db.Users.GetItem(id);
     }
 
-    public IEnumerable<User> GetUsers(int projectId)
+    public ICollection<User> GetUsers(int projectId)
     {
         return _db.Users.GetCollection(projectId);
     }

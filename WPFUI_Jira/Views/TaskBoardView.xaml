@@ -36,12 +36,20 @@
                     PlaceholderText="Описание отсутствует"
                     Text="{Binding Description}"
                     TextWrapping="Wrap" />
-                <Label Content="Исполнитель" />
-                <ui:TextBox
+                <Label Content="Исполнитель"/>
+                <CheckBox IsEnabled="{Binding IsOwner}"
+                          IsChecked="{Binding IsHaveNotExecutor}"
+                          Command="{Binding ChangeExecutionModeCommand}"
+                          Content="Свободная задача"/>
+                <ComboBox Visibility="{Binding IsHaveExecutor}"
+                          IsEnabled="{Binding IsOwner}"
+                          ItemsSource="{Binding Workers}"
+                          SelectedItem="{Binding Executor}"/>
+                <!--<ui:TextBox
                     IsEnabled="{Binding IsOwner}"
                     PlaceholderEnabled="True"
                     PlaceholderText="Исполнитель не назначен"
-                    Text="{Binding Executor.Name}" />
+                    Text="{Binding Executor.Name}" />-->
                 <Label Content="{Binding CreationTime}" ContentStringFormat="Задача была создана {0}" />
                 <Label Content="{Binding ExpirationTime}" ContentStringFormat="Срок выполнения истекает в: {0}" />
             </StackPanel>
@@ -66,12 +74,11 @@
                     Text="{Binding Executor.Name}" />
                 <Label Content="Выберите срок выполнения задачи или оставьте поле пустым если у здачи нет срока выполнения" />
                 <DockPanel>
-                    <DatePicker
-                        SelectedDate="{Binding Date}"/>
+                    <DatePicker SelectedDate="{Binding Date}" />
                     <ui:TextBox
                         PlaceholderEnabled="True"
                         PlaceholderText="Введите время (hh:mm:ss)"
-                        Text="{Binding Time}"/>
+                        Text="{Binding Time}" />
                 </DockPanel>
             </StackPanel>
         </ResourceDictionary>

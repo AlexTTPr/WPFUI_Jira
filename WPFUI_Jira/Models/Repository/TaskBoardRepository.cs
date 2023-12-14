@@ -29,7 +29,7 @@ internal class TaskBoardRepository : IRepository<TaskBoard>
 			_context.TaskBoards.Remove(item);
 	}
 
-    public IEnumerable<TaskBoard> GetCollection(int ownerId)
+    public ICollection<TaskBoard> GetCollection(int ownerId)
     {
         return _context.TaskBoards.Where(c => c.Owner.Id == ownerId).ToList();
     }

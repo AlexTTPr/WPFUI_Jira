@@ -8,7 +8,7 @@ namespace WPFUI_Jira.Models.Repository.Interfaces;
 
 	public interface IRepository<T> where T : class
 {
-    IEnumerable<T> GetCollection(int ownerId);
+    ICollection<T> GetCollection(int ownerId);
 
     T GetItem(int Id);
 

@@ -28,7 +28,7 @@ internal class TaskListRepository : IRepository<TaskList>
 			_context.TaskLists.Remove(item);
 	}
 
-	public IEnumerable<TaskList> GetCollection(int ownerId)
+	public ICollection<TaskList> GetCollection(int ownerId)
 	{
 		return _context.TaskLists.Where(c => c.TaskBoard.Id == ownerId).ToList();
 	}

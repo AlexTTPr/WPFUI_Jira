@@ -29,7 +29,7 @@ internal class ProjectRepository : IRepository<Project>
 			_context.Projects.Remove(item);
 	}
 
-	public IEnumerable<Project> GetCollection(int ownerId)
+	public ICollection<Project> GetCollection(int ownerId)
 	{
 		return _context.Projects.Where(c => c.Owner.Id == ownerId || c.Workers.Any(n => n.Id == ownerId)).Include(c => c.Owner).ToList();
 	}

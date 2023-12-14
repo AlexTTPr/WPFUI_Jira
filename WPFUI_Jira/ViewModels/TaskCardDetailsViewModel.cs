@@ -21,6 +21,13 @@ public partial class TaskCardDetailsViewModel : BaseViewModel
 	public bool IsOwner => _projectStore.CurrentProject.Owner.Id == _accountStore.CurrentUser.Id;
 
 	[ObservableProperty]
+	[NotifyPropertyChangedFor(nameof(IsHaveExecutor))]
+	private bool _isHaveNotExecutor;
+
+	[ObservableProperty]
+	private bool _isHaveExecutor;
+
+	[ObservableProperty]
 	private string _title;
 
 	[ObservableProperty]
@@ -35,7 +42,10 @@ public partial class TaskCardDetailsViewModel : BaseViewModel
 	[ObservableProperty]
 	private DateTime _creationTime;
 
-	public TaskCardDetailsViewModel(ITaskCardStore taskCardStore, IProjectStore projectStore, IAccountStore accountStore, ITaskCardService taskCardService,INavigationService navigationService) : base(navigationService)
+	[ObservableProperty]
+	private ICollection<User>? _workers;
+
+	public TaskCardDetailsViewModel(ITaskCardStore taskCardStore, IProjectStore projectStore, IAccountStore accountStore, ITaskCardService taskCardService, INavigationService navigationService) : base(navigationService)
 	{
 		_taskCardStore = taskCardStore;
 		_projectStore = projectStore;
@@ -49,6 +59,29 @@ public partial class TaskCardDetailsViewModel : BaseViewModel
 		Executor = taskCard.Executor;
 		ExpirationTime = taskCard.ExpirationTime;
 		CreationTime = taskCard.CreationTime;
+		Workers = _projectStore.CurrentProject.Workers;
+
+		IsHaveExecutor = taskCard.Executor != null;
+	}
+
+	//[RelayCommand]
+	//public void DoNotHaveExecutor()
+	//{
+	//	IsHaveExecutor = false;
+	//	Executor = null;
+	//}
+
+	//[RelayCommand]
+	//public void DoHaveExecutor()
+	//{
+	//	IsHaveExecutor = true;
+	//}
+
+	[RelayCommand]
+	public void ChangeExecutionMode()
+	{
+		IsHaveExecutor = !IsHaveExecutor;
+		Executor = null;
 	}
 
 	[RelayCommand]
