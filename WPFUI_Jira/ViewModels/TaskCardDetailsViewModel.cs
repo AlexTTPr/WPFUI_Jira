@@ -18,14 +18,19 @@ public partial class TaskCardDetailsViewModel : BaseViewModel
 
 	private readonly ITaskCardService _taskCardService;
 
-	public bool IsOwner => _projectStore.CurrentProject.Owner.Id == _accountStore.CurrentUser.Id;
+	private TaskCard _taskCard;
 
 	[ObservableProperty]
-	[NotifyPropertyChangedFor(nameof(IsHaveExecutor))]
-	private bool _isHaveNotExecutor;
+	[NotifyPropertyChangedFor(nameof(IsNotOwner))]
+	private bool _isOwner;
+
+	public bool IsNotOwner => !IsOwner;
 
 	[ObservableProperty]
+	[NotifyPropertyChangedFor(nameof(IsHaveNotExecutor))]
 	private bool _isHaveExecutor;
+
+	public bool IsHaveNotExecutor => !IsHaveExecutor;
 
 	[ObservableProperty]
 	private string _title;
@@ -53,15 +58,16 @@ public partial class TaskCardDetailsViewModel : BaseViewModel
 
 		_taskCardService = taskCardService;
 
-		var taskCard = _taskCardStore.CurrentTaskCard;
-		Title = taskCard.Title;
-		Description = taskCard.Description;
-		Executor = taskCard.Executor;
-		ExpirationTime = taskCard.ExpirationTime;
-		CreationTime = taskCard.CreationTime;
+		_taskCard = _taskCardStore.CurrentTaskCard;
+		Title = _taskCard.Title;
+		Description = _taskCard.Description;
+		Executor = _taskCard.Executor;
+		ExpirationTime = _taskCard.ExpirationTime;
+		CreationTime = _taskCard.CreationTime;
 		Workers = _projectStore.CurrentProject.Workers;
 
-		IsHaveExecutor = taskCard.Executor != null;
+		IsHaveExecutor = _taskCard.Executor != null;
+		IsOwner = _projectStore.CurrentProject.Owner.Id == _accountStore.CurrentUser.Id;
 	}
 
 	//[RelayCommand]
@@ -78,10 +84,21 @@ public partial class TaskCardDetailsViewModel : BaseViewModel
 	//}
 
 	[RelayCommand]
+	public void TakeTask()
+	{
+		_taskCardStore.CurrentTaskCard.Executor = _accountStore.CurrentUser;
+
+		_taskCardService.UpdateTaskCard(_taskCardStore.CurrentTaskCard);
+	}
+
+	[RelayCommand]
 	public void ChangeExecutionMode()
 	{
 		IsHaveExecutor = !IsHaveExecutor;
-		Executor = null;
+		if (IsHaveExecutor == false)
+			Executor = null;
+		else
+			Executor = _taskCard.Executor;
 	}
 
 	[RelayCommand]

@@ -37,11 +37,15 @@
                     Text="{Binding Description}"
                     TextWrapping="Wrap" />
                 <Label Content="Исполнитель"/>
+                <CheckBox Visibility="{Binding IsNotOwner, Converter={StaticResource VisibilityOfBool}}"
+                          IsEnabled="{Binding IsHaveNotExecutor, Mode=OneWay}"
+                          Command="{Binding TakeTaskCommand}"
+                          Content="Взять задачу себе"/>
                 <CheckBox IsEnabled="{Binding IsOwner}"
-                          IsChecked="{Binding IsHaveNotExecutor}"
+                          IsChecked="{Binding IsHaveNotExecutor, Mode=OneWay}"
                           Command="{Binding ChangeExecutionModeCommand}"
                           Content="Свободная задача"/>
-                <ComboBox Visibility="{Binding IsHaveExecutor}"
+                <ComboBox Visibility="{Binding IsHaveExecutor, Converter={StaticResource VisibilityOfBool}}"
                           IsEnabled="{Binding IsOwner}"
                           ItemsSource="{Binding Workers}"
                           SelectedItem="{Binding Executor}"/>
