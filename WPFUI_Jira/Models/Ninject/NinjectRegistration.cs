@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WPFUI_Jira.Models.MongoDB;
 using WPFUI_Jira.Models.Repository;
 using WPFUI_Jira.Models.Repository.Interfaces;
 using WPFUI_Jira.Models.Services;
@@ -17,7 +18,7 @@ internal class NinjectRegistration : NinjectModule
 {
     public override void Load()
     {
-        Bind<IDbRepos>().To<DbRepos>().InSingletonScope();
+        Bind<IDbRepos>().To<MongoDbRepos>().InSingletonScope();
 		Bind<IUserService>().To<UserService>();
 		Bind<IProjectService>().To<ProjectService>();
 		Bind<ITaskBoardService>().To<TaskBoardService>();

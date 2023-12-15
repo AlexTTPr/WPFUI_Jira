@@ -11,6 +11,7 @@ using System.IO;
 using System.Net;
 using System.Reflection;
 using System.Windows.Threading;
+using WPFUI_Jira.Models.MongoDB;
 using WPFUI_Jira.Models.Repository;
 using WPFUI_Jira.Models.Repository.Interfaces;
 using WPFUI_Jira.Models.Services;
@@ -53,7 +54,7 @@ public partial class App
 			services.AddSingleton<IAccountStore, AccountStore>();
 			services.AddSingleton<IProjectStore, ProjectStore>();
 			services.AddSingleton<IUserService, UserService>();
-			services.AddSingleton<IDbRepos, DbRepos>();
+			services.AddSingleton<IDbRepos, MongoDbRepos>();
 			services.AddSingleton<IProjectService, ProjectService>();
 			services.AddSingleton<ITaskBoardService, TaskBoardService>();
 			services.AddSingleton<ITaskListService, TaskListService>();
