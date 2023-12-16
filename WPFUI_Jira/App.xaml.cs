@@ -60,10 +60,10 @@ public partial class App
 			services.AddSingleton<ITaskCardService, TaskCardService>();
 			services.AddSingleton<ITaskCardStore, TaskCardStore>();
 
-			services.AddSingleton<ProjectsView>();
+			services.AddTransient<ProjectsView>();
 			services.AddSingleton<ProjectsViewModel>();
 			services.AddSingleton<TaskBoardView>();
-			services.AddSingleton<TaskBoardViewModel>();
+			services.AddTransient<TaskBoardViewModel>();
 
 			services.AddTransient<TaskCardDetailsViewModel>();
 

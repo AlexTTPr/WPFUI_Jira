@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Ninject.Activation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +15,7 @@ internal class TaskCardRepository : IRepository<TaskCard>
     public TaskCardRepository(ApplicationContext context)
     {
         _context = context;
-    }
+	}
 
     public void Create(TaskCard item)
 	{
@@ -40,6 +41,7 @@ internal class TaskCardRepository : IRepository<TaskCard>
 
 	public void Update(TaskCard item)
 	{
+		_context.TaskCards.Attach(item);
 		_context.Entry(item).State = EntityState.Modified;
 	}
 }

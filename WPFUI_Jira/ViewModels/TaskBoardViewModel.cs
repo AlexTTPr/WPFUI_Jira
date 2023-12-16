@@ -78,7 +78,6 @@ public partial class TaskBoardViewModel : BaseViewModel, IDropTarget
 		Debug.WriteLine("Edited...");
 	}
 
-	//FUUUUUUUUUUUUUUUUUUK
 	[RelayCommand]
 	public async void ViewTaskDetails(object[] values)
 	{
@@ -110,7 +109,9 @@ public partial class TaskBoardViewModel : BaseViewModel, IDropTarget
 		{
 			case Wpf.Ui.Controls.ContentDialogResult.Primary:
 				context.SaveChanges();
+				context.SaveChanges();
 				LoadTaskBoardData();
+				context.SaveChanges();
 				break;
 			case Wpf.Ui.Controls.ContentDialogResult.Secondary:
 				context.Delete();
