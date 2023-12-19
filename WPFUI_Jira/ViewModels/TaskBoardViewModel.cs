@@ -109,9 +109,9 @@ public partial class TaskBoardViewModel : BaseViewModel, IDropTarget
 		{
 			case Wpf.Ui.Controls.ContentDialogResult.Primary:
 				context.SaveChanges();
-				context.SaveChanges();
+				//context.SaveChanges();
 				LoadTaskBoardData();
-				context.SaveChanges();
+				//context.SaveChanges();
 				break;
 			case Wpf.Ui.Controls.ContentDialogResult.Secondary:
 				context.Delete();
