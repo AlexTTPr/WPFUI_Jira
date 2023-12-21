@@ -17,9 +17,9 @@ public class TaskList
 
     public ObservableCollection<TaskCard> TaskCards { get; set; }
 
-    public string Title { get; private set; }
+    public string Title { get; set; }
 
-    public ListType Type { get; private set; }
+    public ListType Type { get; set; }
 
     public TaskList(ListType type)
     {

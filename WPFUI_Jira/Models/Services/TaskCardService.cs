@@ -7,7 +7,7 @@ using WPFUI_Jira.Models.Repository.Interfaces;
 using WPFUI_Jira.Models.Services.Interfaces;
 
 namespace WPFUI_Jira.Models.Services;
-internal class TaskCardService : ITaskCardService
+public class TaskCardService : ITaskCardService
 {
     private IDbRepos _db;
 
@@ -45,10 +45,25 @@ internal class TaskCardService : ITaskCardService
         Save();
     }
 
+    public TaskCard PutTask(TaskCard taskCard)
+    {
+        if (taskCard == null)
+            throw new ArgumentNullException(nameof(taskCard));
+        if (string.IsNullOrEmpty(taskCard.Title))
+            throw new InvalidOperationException("Title shouldn't be null or empty");
+        if (taskCard.ExpirationTime < DateTime.Now)
+            throw new InvalidOperationException("ExpirationDate should be greater than currenr date");
+        
+        if(taskCard.Id == 0)
+            CreateTaskCard(taskCard);
+        else
+            UpdateTaskCard(taskCard);
+
+        return GetTaskCard(taskCard.Id);
+    }
+
     public void Save()
     {
         _db.Save();
     }
 }
-
-

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,6 +17,26 @@ public class UserService : IUserService
     {
         _db = dbRepos;
     }
+
+    public User PutUser(User user)
+    {
+		if (user == null)
+            throw new ArgumentNullException(nameof(user));
+        if (string.IsNullOrEmpty(user.Email) || !user.Email.Contains('@') || !user.Email.Contains('.'))
+            throw new InvalidOperationException("Incorrect user email");
+        if (string.IsNullOrEmpty(user.Name))
+            throw new InvalidOperationException("Incorrect user name");
+        if (string.IsNullOrEmpty(user.Login))
+			throw new InvalidOperationException("Incorrect user login");
+
+
+		if (user.Id == 0)
+			CreateUser(user);
+		else
+			UpdateUser(user);
+
+		return GetUser(user.Id);
+	}
 
     public void CreateUser(User user)
     {
