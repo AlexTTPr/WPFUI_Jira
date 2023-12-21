@@ -4,11 +4,22 @@ namespace WPFUI_Jira.Models;
 
 public class ActionRecord
 {
-    public string Id { get; set; }
+    public int Id { get; set; }
 
-    public TimeSpan SpendTime { get; set; }
+    public TimeSpan TimeSpent { get; set; }
 
     public DateTime CrearionTime { get; set; }
 
-    public User Actor { get; set; }
+    public int ActorId { get; set; }
+
+    protected ActionRecord()
+    {
+		CrearionTime = DateTime.Now;
+	}
+
+    public ActionRecord(TimeSpan timeSpent, int actorId) : this() 
+    {
+		TimeSpent = timeSpent;
+        ActorId = actorId;
+    }
 }

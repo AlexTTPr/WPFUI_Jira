@@ -29,7 +29,8 @@ public class TaskCard
     private TaskCard()
     {
         CreationTime = DateTime.Now;
-    }
+		Actions = new();
+	}
 
     public TaskCard(string title, string? taskDescription, User? executer, DateTime? expirationDate, int taskListId) : this()
     {
@@ -38,5 +39,5 @@ public class TaskCard
         Executor = executer;
         ExpirationTime = expirationDate;
         TaskListId = taskListId;
-    }
+	}
 }

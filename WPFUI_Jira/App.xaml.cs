@@ -3,6 +3,7 @@
 // Copyright (C) Leszek Pomianowski and WPF UI Contributors.
 // All Rights Reserved.
 
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -50,6 +51,7 @@ public partial class App
 			services.AddSingleton<ISnackbarService, SnackbarService>();
 			services.AddSingleton<IContentDialogService, ContentDialogService>();
 			services.AddSingleton<IAuthenticationService, AuthenticationService>();
+			services.AddSingleton<ITaskListStore, TaskListStore>();
 			services.AddSingleton<IAccountStore, AccountStore>();
 			services.AddSingleton<IProjectStore, ProjectStore>();
 			services.AddSingleton<IUserService, UserService>();
@@ -61,10 +63,10 @@ public partial class App
 			services.AddSingleton<ITaskCardStore, TaskCardStore>();
 
 			services.AddTransient<ProjectsView>();
-			services.AddSingleton<ProjectsViewModel>();
-			services.AddSingleton<TaskBoardView>();
+			services.AddTransient<ProjectsViewModel>();
+			services.AddTransient<TaskBoardView>();
 			services.AddTransient<TaskBoardViewModel>();
-
+			services.AddTransient<CreateTaskCardViewModel>();
 			services.AddTransient<TaskCardDetailsViewModel>();
 
 			services.AddSingleton<DashboardPage>();

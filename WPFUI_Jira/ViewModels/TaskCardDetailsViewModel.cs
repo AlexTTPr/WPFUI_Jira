@@ -89,6 +89,8 @@ public partial class TaskCardDetailsViewModel : BaseViewModel
 		_taskCardStore.CurrentTaskCard.Executor = _accountStore.CurrentUser;
 
 		_taskCardService.UpdateTaskCard(_taskCardStore.CurrentTaskCard);
+		_taskCardService.UpdateTaskCard(_taskCardStore.CurrentTaskCard);
+		_taskCardService.UpdateTaskCard(_taskCardStore.CurrentTaskCard);
 	}
 
 	[RelayCommand]
@@ -109,6 +111,8 @@ public partial class TaskCardDetailsViewModel : BaseViewModel
 		_taskCardStore.CurrentTaskCard.Executor = Executor;
 		_taskCardStore.CurrentTaskCard.ExpirationTime = ExpirationTime;
 
+		_taskCardService.UpdateTaskCard(_taskCardStore.CurrentTaskCard);
+		_taskCardService.UpdateTaskCard(_taskCardStore.CurrentTaskCard);
 		_taskCardService.UpdateTaskCard(_taskCardStore.CurrentTaskCard);
 	}
 

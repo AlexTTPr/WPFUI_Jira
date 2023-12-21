@@ -41,8 +41,7 @@ internal class TaskCardRepository : IRepository<TaskCard>
 
 	public void Update(TaskCard item)
 	{
-		_context.TaskCards.Attach(item);
-		_context.Entry(item).State = EntityState.Modified;
+		_context.TaskCards.Update(item);
 	}
 }
 

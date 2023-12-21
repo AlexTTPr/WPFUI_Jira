@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace WPFUI_Jira.Models.Services.Interfaces;
-internal interface ITaskListService
+public interface ITaskListService
 {
     IEnumerable<TaskList> GetTaskLists(int ownerId);
 

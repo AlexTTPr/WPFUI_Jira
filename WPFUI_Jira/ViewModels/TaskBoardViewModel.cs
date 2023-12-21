@@ -48,6 +48,11 @@ public partial class TaskBoardViewModel : BaseViewModel, IDropTarget
 	[ObservableProperty]
 	private TaskBoard _taskBoard;
 
+	[ObservableProperty]
+	private TaskCard? _chosenTaskCard;
+
+	[ObservableProperty]
+	private bool _isTaskCardFlyoutOpen;
 
 	public TaskBoardViewModel(IAuthenticationService authenticationService, IContentDialogService contentDialogService, IProjectStore projectStore, INavigationService navigationService) : base(navigationService)
 	{
@@ -95,7 +100,7 @@ public partial class TaskBoardViewModel : BaseViewModel, IDropTarget
 		{
 			Title = string.Empty,
 			Content = content,
-			CloseButtonText = "Close"
+			CloseButtonText = "Закрыть"
 		};
 
 		if (IsOwner)
@@ -109,9 +114,9 @@ public partial class TaskBoardViewModel : BaseViewModel, IDropTarget
 		{
 			case Wpf.Ui.Controls.ContentDialogResult.Primary:
 				context.SaveChanges();
-				//context.SaveChanges();
+				context.SaveChanges();
 				LoadTaskBoardData();
-				//context.SaveChanges();
+				context.SaveChanges();
 				break;
 			case Wpf.Ui.Controls.ContentDialogResult.Secondary:
 				context.Delete();
@@ -123,10 +128,48 @@ public partial class TaskBoardViewModel : BaseViewModel, IDropTarget
 	}
 
 	[RelayCommand]
-	public void CreateTask(TaskList taskList)
+	public void TimeReport(DateTime timeSpent)
 	{
-		//var content = (Panel)values[0];
-		//var taskCard = (TaskList)values[1];
+		var time = timeSpent.AddSeconds(-timeSpent.Second).TimeOfDay;
+		ChosenTaskCard.Actions.Add(new(time, AuthenticationService.AccountStore.CurrentUser.Id));
+		_taskCardService.UpdateTaskCard(ChosenTaskCard);
+	}
+
+	[RelayCommand]
+	public async void CreateTask(object[] values)
+	{
+		var content = (Panel)values[0];
+		var taskList = (TaskList)values[1];
+
+		var taskListStore = App.AppHost.Services.GetService<ITaskListStore>();
+		taskListStore.CurrentTaskList = taskList;
+
+		var context = App.AppHost.Services.GetService<CreateTaskCardViewModel>();
+
+		content.DataContext = context;
+
+		var dialogOptions = new SimpleContentDialogCreateOptions()
+		{
+			Title = string.Empty,
+			Content = content,
+			CloseButtonText = "Закрыть",
+			PrimaryButtonText = "Сохранить"
+		};
+
+		var result = await ContentDialogService.ShowSimpleDialogAsync(dialogOptions);
+
+		switch (result)
+		{
+			case Wpf.Ui.Controls.ContentDialogResult.Primary:
+				context.Save();
+				LoadTaskBoardData();
+				break;
+			case Wpf.Ui.Controls.ContentDialogResult.Secondary:
+
+				break;
+			case Wpf.Ui.Controls.ContentDialogResult.None:
+				break;
+		}
 	}
 
 	void LoadTaskBoardData()
@@ -143,6 +186,18 @@ public partial class TaskBoardViewModel : BaseViewModel, IDropTarget
 	bool IsOwnerOrExecutor(TaskCard taskCard)
 	{
 		return IsOwner || taskCard.Executor?.Id == AuthenticationService.AccountStore.CurrentUser.Id;
+	}
+
+	[RelayCommand]
+	public void SetChosenTaskCard(TaskCard taskCard)
+	{
+		if (taskCard.Executor?.Id != AuthenticationService.AccountStore.CurrentUser.Id)
+			return;
+
+		if (!IsTaskCardFlyoutOpen)
+			IsTaskCardFlyoutOpen = true;
+
+		ChosenTaskCard = taskCard;
 	}
 
 	#region DragAndDrop

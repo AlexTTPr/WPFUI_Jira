@@ -31,14 +31,8 @@ public class TestTaskCardService
 	[Test]
 	public void CreateTask_Fail()
 	{
-		try
-		{
-			Assert.Throws<InvalidOperationException>(() => service.PutTask(_invalidTaskCardTitle));
-			Assert.Throws<InvalidOperationException>(() => service.PutTask(_invalidTaskCardExpirationTime));
-		}
-		catch (Exception ex) { }
-
-		Assert.Pass();
+		Assert.Throws<InvalidOperationException>(() => service.PutTask(_invalidTaskCardTitle));
+		Assert.Throws<InvalidOperationException>(() => service.PutTask(_invalidTaskCardExpirationTime));
 	}
 
 	[Test]

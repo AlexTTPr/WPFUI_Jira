@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Configuration;
+using Microsoft.Extensions.Options;
 
 namespace WPFUI_Jira.Models.Repository;
 
@@ -30,8 +31,12 @@ internal class ApplicationContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseNpgsql(_connectionString);
-    }
+		optionsBuilder.EnableSensitiveDataLogging();
+
+		optionsBuilder.UseNpgsql(_connectionString);
+
+		optionsBuilder.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
+	}
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
