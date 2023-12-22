@@ -13,7 +13,7 @@ public class TaskList
 {
     public int Id { get; set; }
 
-    public TaskBoard TaskBoard { get; set; }
+    public int TaskBoardId { get; set; }
 
     public ObservableCollection<TaskCard> TaskCards { get; set; }
 

@@ -81,7 +81,7 @@ public partial class App
 	{
 		//tmp hdcd
 		var authService = AppHost.Services.GetRequiredService<IAuthenticationService>();
-		authService.AccountStore.CurrentUser = AppHost.Services.GetRequiredService<IUserService>().GetUser(2);
+		authService.AccountStore.CurrentUser = AppHost.Services.GetRequiredService<IUserService>().GetUser(1);
 	}
 
 	/// <summary>

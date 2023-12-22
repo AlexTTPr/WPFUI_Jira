@@ -7,17 +7,24 @@
     xmlns:dd="urn:gong-wpf-dragdrop"
     xmlns:helpers="clr-namespace:WPFUI_Jira.Helpers"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:model="clr-namespace:WPFUI_Jira.Models"
     xmlns:sys="clr-namespace:System;assembly=netstandard"
     xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
     xmlns:views="clr-namespace:WPFUI_Jira.Views"
     xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
     Title="TaskBoard"
-    d:DesignHeight="450"
-    d:DesignWidth="800"
     mc:Ignorable="d">
 
     <Page.Resources>
         <ResourceDictionary>
+            <ObjectDataProvider
+                x:Key="dataFromEnum"
+                MethodName="GetValues"
+                ObjectType="{x:Type sys:Enum}">
+                <ObjectDataProvider.MethodParameters>
+                    <x:Type TypeName="model:ListType" />
+                </ObjectDataProvider.MethodParameters>
+            </ObjectDataProvider>
             <BooleanToVisibilityConverter x:Key="VisibilityOfBool" />
             <helpers:MultiValueConverter x:Key="MultiValueConverter" />
             <StackPanel
@@ -84,178 +91,241 @@
         </ResourceDictionary>
     </Page.Resources>
 
-    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Hidden">
-        <StackPanel>
+    <StackPanel VerticalAlignment="Stretch">
+        <DockPanel>
             <ui:TextBlock FontTypography="Subtitle" Text="{Binding Title}" />
-            <DockPanel>
-                <ui:VirtualizingItemsControl
-                    x:Name="ItemsControl"
-                    Margin="5"
-                    Padding="5"
-                    dd:DragDrop.DropHandler="{Binding ViewModel}"
-                    dd:DragDrop.IsDragSource="{Binding ViewModel.IsOwner}"
-                    dd:DragDrop.IsDropTarget="True"
-                    ItemsSource="{Binding ViewModel.TaskBoard.TaskLists}">
-                    <ui:VirtualizingItemsControl.Style>
-                        <Style TargetType="ItemsControl">
-                            <Style.Triggers>
-                                <Trigger Property="HasItems" Value="false">
-                                    <Setter Property="Template">
-                                        <Setter.Value>
-                                            <ControlTemplate>
-                                                <TextBlock Text="This Control is empty" />
-                                            </ControlTemplate>
-                                        </Setter.Value>
-                                    </Setter>
-                                </Trigger>
-                            </Style.Triggers>
-                        </Style>
-                    </ui:VirtualizingItemsControl.Style>
-                    <ui:VirtualizingItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <StackPanel Orientation="Horizontal" />
-                        </ItemsPanelTemplate>
-                    </ui:VirtualizingItemsControl.ItemsPanel>
-                    <ui:VirtualizingItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <Border
-                                Width="200"
-                                Margin="10"
+            <ui:Button Content="Прогресс" Icon="{ui:SymbolIcon ChartMultiple20}" />
+        </DockPanel>
+        <ui:DynamicScrollViewer HorizontalScrollBarVisibility="Auto">
+            <StackPanel>
+                <DockPanel>
+                    <ui:VirtualizingItemsControl
+                        x:Name="ItemsControl"
+                        Margin="5"
+                        Padding="5"
+                        dd:DragDrop.DropHandler="{Binding ViewModel}"
+                        dd:DragDrop.IsDragSource="{Binding ViewModel.IsOwner}"
+                        dd:DragDrop.IsDropTarget="True"
+                        ItemsSource="{Binding ViewModel.TaskBoard.TaskLists}">
+                        <ui:VirtualizingItemsControl.Style>
+                            <Style TargetType="ItemsControl">
+                                <Style.Triggers>
+                                    <Trigger Property="HasItems" Value="false">
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate>
+                                                    <TextBlock Text="This Control is empty" />
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ui:VirtualizingItemsControl.Style>
+                        <ui:VirtualizingItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Horizontal" />
+                            </ItemsPanelTemplate>
+                        </ui:VirtualizingItemsControl.ItemsPanel>
+                        <ui:VirtualizingItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Border
+                                    Width="200"
+                                    Margin="10"
+                                    Padding="5"
+                                    VerticalAlignment="Top"
+                                    BorderBrush="Black"
+                                    BorderThickness="1.5"
+                                    CornerRadius="5">
+                                    <StackPanel>
+                                        <DockPanel HorizontalAlignment="Stretch">
+                                            <Label
+                                                HorizontalAlignment="Stretch"
+                                                Content="{Binding Title}"
+                                                Foreground="Black" />
+                                            <ui:Button
+                                                HorizontalAlignment="Right"
+                                                Appearance="Transparent"
+                                                BorderBrush="Transparent"
+                                                Command="{Binding DataContext.ViewModel.OpenTaskListRedactingFlyoutCommand, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"
+                                                CommandParameter="{Binding}"
+                                                Icon="{ui:SymbolIcon Settings20,
+                                                                     Filled=True}" />
+                                        </DockPanel>
+                                        <ui:VirtualizingItemsControl
+                                            MinHeight="50"
+                                            dd:DragDrop.DropHandler="{Binding DataContext.ViewModel, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"
+                                            dd:DragDrop.IsDragSource="True"
+                                            dd:DragDrop.IsDropTarget="True"
+                                            ItemsSource="{Binding TaskCards}">
+                                            <ui:VirtualizingItemsControl.ItemsPanel>
+                                                <ItemsPanelTemplate>
+                                                    <StackPanel Orientation="Vertical" />
+                                                </ItemsPanelTemplate>
+                                            </ui:VirtualizingItemsControl.ItemsPanel>
+                                            <ui:VirtualizingItemsControl.ItemTemplate>
+                                                <DataTemplate>
+                                                    <ui:CardAction
+                                                        MinHeight="100"
+                                                        Margin="0,5,0,5"
+                                                        Padding="5"
+                                                        HorizontalAlignment="Stretch"
+                                                        VerticalAlignment="Top"
+                                                        Command="{Binding DataContext.ViewModel.ViewTaskDetailsCommand, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}, AncestorLevel=2}}"
+                                                        IsChevronVisible="False">
+                                                        <ui:CardAction.CommandParameter>
+                                                            <MultiBinding Converter="{StaticResource MultiValueConverter}">
+                                                                <Binding Source="{StaticResource ViewDetailsCD}" />
+                                                                <Binding BindsDirectlyToSource="True" />
+                                                            </MultiBinding>
+                                                        </ui:CardAction.CommandParameter>
+                                                        <Grid>
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="*" />
+                                                                <ColumnDefinition Width="Auto" />
+                                                            </Grid.ColumnDefinitions>
+                                                            <Grid.RowDefinitions>
+                                                                <RowDefinition Height="Auto" />
+                                                                <RowDefinition Height="Auto" />
+                                                            </Grid.RowDefinitions>
+                                                            <Label
+                                                                Grid.Row="0"
+                                                                Grid.Column="0"
+                                                                Content="{Binding Title}" />
+                                                            <ui:TextBlock
+                                                                Grid.Row="1"
+                                                                Grid.Column="0"
+                                                                Text="{Binding Description}"
+                                                                TextWrapping="Wrap" />
+                                                            <ui:Button
+                                                                Grid.Row="1"
+                                                                Grid.Column="1"
+                                                                Width="30"
+                                                                Height="30"
+                                                                HorizontalAlignment="Right"
+                                                                VerticalAlignment="Bottom"
+                                                                BorderThickness="0"
+                                                                Command="{Binding DataContext.ViewModel.SetChosenTaskCardCommand, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}, AncestorLevel=2}}"
+                                                                CommandParameter="{Binding}">
+                                                                <Button.Template>
+                                                                    <ControlTemplate>
+                                                                        <Ellipse>
+                                                                            <Ellipse.Fill>
+                                                                                <ImageBrush ImageSource="../Resources/Images/noaccountimage.png" />
+                                                                            </Ellipse.Fill>
+                                                                        </Ellipse>
+                                                                    </ControlTemplate>
+                                                                </Button.Template>
+                                                            </ui:Button>
+                                                        </Grid>
+                                                    </ui:CardAction>
+                                                </DataTemplate>
+                                            </ui:VirtualizingItemsControl.ItemTemplate>
+                                        </ui:VirtualizingItemsControl>
+                                        <ui:Button
+                                            Margin="0,5"
+                                            HorizontalAlignment="Stretch"
+                                            Appearance="Dark"
+                                            Command="{Binding DataContext.ViewModel.CreateTaskCommand, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"
+                                            Icon="{ui:SymbolIcon Add20,
+                                                                 Filled=True}"
+                                            Visibility="{Binding DataContext.ViewModel.IsOwner, Converter={StaticResource VisibilityOfBool}, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}">
+                                            <ui:Button.CommandParameter>
+                                                <MultiBinding Converter="{StaticResource MultiValueConverter}">
+                                                    <Binding Source="{StaticResource CreateTaskCD}" />
+                                                    <Binding BindsDirectlyToSource="True" />
+                                                </MultiBinding>
+                                            </ui:Button.CommandParameter>
+                                        </ui:Button>
+                                    </StackPanel>
+                                </Border>
+                            </DataTemplate>
+                        </ui:VirtualizingItemsControl.ItemTemplate>
+                    </ui:VirtualizingItemsControl>
+                    <ui:Button
+                        MinWidth="{Binding ActualHeight, RelativeSource={RelativeSource Self}}"
+                        MinHeight="{Binding ActualWidth, RelativeSource={RelativeSource Self}}"
+                        Margin="0,20"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Command="{Binding DataContext.ViewModel.OpenTaskListAdditionFlyoutCommand}"
+                        Icon="{ui:SymbolIcon AddSquare20}"
+                        Visibility="{Binding ViewModel.IsOwner, Converter={StaticResource VisibilityOfBool}}" />
+                    <ui:Flyout IsOpen="{Binding ViewModel.IsTaskCardFlyoutOpen, Mode=TwoWay}" Placement="MousePoint">
+                        <StackPanel Width="100">
+                            <Label HorizontalAlignment="Center" Content="Отчитаться" />
+                            <xctk:TimePicker
+                                x:Name="ReportTime"
+                                Margin="5"
+                                DefaultValue="0:00:00"
+                                Format="ShortTime"
+                                ShowButtonSpinner="True"
+                                StartTime="0:00:00"
+                                TimeInterval="0:10" />
+                            <ui:Button
                                 Padding="5"
-                                VerticalAlignment="Top"
-                                BorderBrush="Black"
-                                BorderThickness="1.5"
-                                CornerRadius="5">
-                                <StackPanel>
-                                    <Label Content="{Binding Title}" Foreground="Black" />
-                                    <ui:VirtualizingItemsControl
-                                        MinHeight="50"
-                                        dd:DragDrop.DropHandler="{Binding DataContext.ViewModel, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"
-                                        dd:DragDrop.IsDragSource="True"
-                                        dd:DragDrop.IsDropTarget="True"
-                                        ItemsSource="{Binding TaskCards}">
-                                        <ui:VirtualizingItemsControl.ItemsPanel>
-                                            <ItemsPanelTemplate>
-                                                <StackPanel Orientation="Vertical" />
-                                            </ItemsPanelTemplate>
-                                        </ui:VirtualizingItemsControl.ItemsPanel>
-                                        <ui:VirtualizingItemsControl.ItemTemplate>
-                                            <DataTemplate>
-                                                <ui:CardAction
-                                                    MinHeight="100"
-                                                    Margin="0,5,0,5"
-                                                    Padding="5"
-                                                    HorizontalAlignment="Stretch"
-                                                    VerticalAlignment="Top"
-                                                    Command="{Binding DataContext.ViewModel.ViewTaskDetailsCommand, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}, AncestorLevel=2}}"
-                                                    IsChevronVisible="False">
-                                                    <ui:CardAction.CommandParameter>
-                                                        <MultiBinding Converter="{StaticResource MultiValueConverter}">
-                                                            <Binding Source="{StaticResource ViewDetailsCD}" />
-                                                            <Binding BindsDirectlyToSource="True" />
-                                                        </MultiBinding>
-                                                    </ui:CardAction.CommandParameter>
-                                                    <Grid>
-                                                        <Grid.ColumnDefinitions>
-                                                            <ColumnDefinition Width="*" />
-                                                            <ColumnDefinition Width="Auto" />
-                                                        </Grid.ColumnDefinitions>
-                                                        <Grid.RowDefinitions>
-                                                            <RowDefinition Height="Auto" />
-                                                            <RowDefinition Height="Auto" />
-                                                        </Grid.RowDefinitions>
-                                                        <Label
-                                                            Grid.Row="0"
-                                                            Grid.Column="0"
-                                                            Content="{Binding Title}" />
-                                                        <ui:TextBlock
-                                                            Grid.Row="1"
-                                                            Grid.Column="0"
-                                                            Text="{Binding Description}"
-                                                            TextWrapping="Wrap" />
-                                                        <ui:Button
-                                                            Grid.Row="1"
-                                                            Grid.Column="1"
-                                                            Width="30"
-                                                            Height="30"
-                                                            HorizontalAlignment="Right"
-                                                            VerticalAlignment="Bottom"
-                                                            BorderThickness="0"
-                                                            Command="{Binding DataContext.ViewModel.SetChosenTaskCardCommand, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}, AncestorLevel=2}}"
-                                                            CommandParameter="{Binding}">
-                                                            <Button.Template>
-                                                                <ControlTemplate>
-                                                                    <Ellipse>
-                                                                        <Ellipse.Fill>
-                                                                            <ImageBrush ImageSource="../Resources/Images/noaccountimage.png" />
-                                                                        </Ellipse.Fill>
-                                                                    </Ellipse>
-                                                                </ControlTemplate>
-                                                            </Button.Template>
-                                                        </ui:Button>
-                                                    </Grid>
-                                                </ui:CardAction>
-                                            </DataTemplate>
-                                        </ui:VirtualizingItemsControl.ItemTemplate>
-                                    </ui:VirtualizingItemsControl>
-                                    <ui:Button
-                                        Margin="0,5"
-                                        HorizontalAlignment="Stretch"
-                                        Appearance="Dark"
-                                        Command="{Binding DataContext.ViewModel.CreateTaskCommand, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"
-                                        Content="+"
-                                        Visibility="{Binding DataContext.ViewModel.IsOwner, Converter={StaticResource VisibilityOfBool}, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}">
-                                        <ui:Button.CommandParameter>
-                                            <MultiBinding Converter="{StaticResource MultiValueConverter}">
-                                                <Binding Source="{StaticResource CreateTaskCD}" />
-                                                <Binding BindsDirectlyToSource="True" />
-                                            </MultiBinding>
-                                        </ui:Button.CommandParameter>
-                                    </ui:Button>
-                                </StackPanel>
-                            </Border>
-                        </DataTemplate>
-                    </ui:VirtualizingItemsControl.ItemTemplate>
-                </ui:VirtualizingItemsControl>
-                <ui:Button
-                    Margin="0,20"
-                    HorizontalAlignment="Left"
-                    VerticalAlignment="Top"
-                    Content="+"
-                    Visibility="{Binding ViewModel.IsOwner, Converter={StaticResource VisibilityOfBool}}" />
-                <ui:Flyout IsOpen="{Binding ViewModel.IsTaskCardFlyoutOpen, Mode=TwoWay}" Placement="MousePoint">
-                    <StackPanel Width="100">
-                        <Label Content="Отчитаться"
-                               HorizontalAlignment="Center"/>
-                        <xctk:TimePicker
-                            x:Name="ReportTime"
-                            Format="ShortTime"
-                            ShowButtonSpinner="True"
-                            TimeInterval="0:10"
-                            DefaultValue="0:00:00"
-                            StartTime="0:00:00"
-                            Margin="5"/>
-                        <ui:Button
-                            Command="{Binding ViewModel.TimeReportCommand}"
-                            CommandParameter="{Binding Value, ElementName=ReportTime}"
-                            Content="Сохранить" 
-                            HorizontalAlignment="Stretch"
-                            Padding="5"/>
-                    </StackPanel>
-                </ui:Flyout>
-                <ui:Flyout IsOpen="{Binding ViewModel.IsTaskListFlyoutOpen, Mode=TwoWay}" Placement="MousePoint">
-                    <StackPanel Width="100">
-                        <Label Content="Название"
-                            HorizontalAlignment="Center"/>
-                        <ComboBox ItemsSource="{Binding}"/>
-                        <ui:Button
-                            Command="{Binding ViewModel.AddTaskListCommand}"
-                            Content="Сохранить" 
-                            HorizontalAlignment="Stretch"
-                            Padding="5"/>
-                    </StackPanel>
-                </ui:Flyout>
-            </DockPanel>
-        </StackPanel>
-    </ScrollViewer>
+                                HorizontalAlignment="Stretch"
+                                Command="{Binding ViewModel.TimeReportCommand}"
+                                CommandParameter="{Binding Value, ElementName=ReportTime}"
+                                Content="Сохранить" />
+                        </StackPanel>
+                    </ui:Flyout>
+                    <ui:Flyout IsOpen="{Binding ViewModel.IsTaskListCreateFlyoutOpen, Mode=TwoWay}" Placement="MousePoint">
+                        <StackPanel MinWidth="150">
+                            <Label
+                                Margin="0,5"
+                                HorizontalAlignment="Center"
+                                Content="Название" />
+                            <ui:TextBox Text="{Binding ViewModel.CurrentTaskListTitle}" />
+                            <Label
+                                Margin="0,5"
+                                HorizontalAlignment="Center"
+                                Content="Тип" />
+                            <ComboBox
+                                Margin="0,5"
+                                ItemsSource="{Binding Source={StaticResource dataFromEnum}}"
+                                SelectedItem="{Binding ViewModel.CurrentListType}" />
+                            <ui:Button
+                                Margin="0,5"
+                                Padding="5"
+                                HorizontalAlignment="Stretch"
+                                Command="{Binding ViewModel.AddTaskListCommand}"
+                                Content="Сохранить" />
+                        </StackPanel>
+                    </ui:Flyout>
+                    <ui:Flyout IsOpen="{Binding ViewModel.IsTaskListRedactFlyoutOpen, Mode=TwoWay}" Placement="MousePoint">
+                        <StackPanel MinWidth="150">
+                            <Label
+                                Margin="0,5"
+                                HorizontalAlignment="Center"
+                                Content="Название" />
+                            <ui:TextBox Text="{Binding ViewModel.CurrentTaskListTitle}" />
+                            <Label
+                                Margin="0,5"
+                                HorizontalAlignment="Center"
+                                Content="Тип" />
+                            <ComboBox
+                                Margin="0,5"
+                                ItemsSource="{Binding Source={StaticResource dataFromEnum}}"
+                                SelectedItem="{Binding ViewModel.CurrentListType}" />
+                            <DockPanel>
+                                <ui:Button
+                                    Margin="0,5,5,0"
+                                    Padding="5"
+                                    HorizontalAlignment="Stretch"
+                                    Command="{Binding ViewModel.UpadateTaskListCommand}"
+                                    Content="Сохранить" />
+                                <ui:Button
+                                    Margin="5,5,0,0"
+                                    Padding="5"
+                                    HorizontalAlignment="Stretch"
+                                    Command="{Binding ViewModel.DeleteTaskListCommand}"
+                                    Content="Удалить" />
+                            </DockPanel>
+                        </StackPanel>
+                    </ui:Flyout>
+                </DockPanel>
+            </StackPanel>
+        </ui:DynamicScrollViewer>
+    </StackPanel>
 </Page>

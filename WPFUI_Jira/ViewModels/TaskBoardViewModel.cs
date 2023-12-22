@@ -1,43 +1,29 @@
-﻿using System.Diagnostics;
-using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using GongSolutions.Wpf.DragDrop;
-using System.Windows;
-using GongSolutions.Wpf.DragDrop.Utilities;
-using WPFUI_Jira.Models;
-using System;
-using System.Windows.Input;
-using System.Collections;
-using System.Linq;
-using Microsoft.EntityFrameworkCore;
-using WPFUI_Jira.Models.Repository;
+﻿using GongSolutions.Wpf.DragDrop;
+using Microsoft.Extensions.DependencyInjection;
 using Ninject;
-using WPFUI_Jira.Models.Ninject;
-using System.Configuration;
+using System.Collections;
 using System.Collections.ObjectModel;
-using System.Windows.Navigation;
-using System.Threading.Tasks;
+using System.Diagnostics;
+using System.Windows.Controls;
+using WPFUI_Jira.Models;
+using WPFUI_Jira.Models.Ninject;
 using WPFUI_Jira.Models.Services.Interfaces;
 using WPFUI_Jira.Models.Stores.Interfaces;
-using WPFUI_Jira.Models.Stores;
-using WPFUI_Jira.Models.Services;
-using System.Windows.Controls;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace WPFUI_Jira.ViewModels;
 
 public partial class TaskBoardViewModel : BaseViewModel, IDropTarget
 {
 	public IAuthenticationService AuthenticationService { get; init; }
-	public IContentDialogService ContentDialogService {  get; init; }
+	public IContentDialogService ContentDialogService { get; init; }
 
 	private StandardKernel _kernel;
 
 	private IProjectStore _projectStore;
-    private IProjectService _projectService;
+	private IProjectService _projectService;
 	private ITaskBoardService _taskBoardService;
-    private ITaskListService _taskListService;
-    private ITaskCardService _taskCardService;
+	private ITaskListService _taskListService;
+	private ITaskCardService _taskCardService;
 	private IUserService _userService;
 
 	[ObservableProperty]
@@ -54,18 +40,33 @@ public partial class TaskBoardViewModel : BaseViewModel, IDropTarget
 	[ObservableProperty]
 	private bool _isTaskCardFlyoutOpen;
 
+	[ObservableProperty]
+	private bool _isTaskListCreateFlyoutOpen;
+
+	[ObservableProperty]
+	private bool _isTaskListRedactFlyoutOpen;
+
+	[ObservableProperty]
+	private ListType _currentListType;
+
+	[ObservableProperty]
+	private string? _currentTaskListTitle;
+
+	[ObservableProperty]
+	private TaskList? _currentTaskList;
+
 	public TaskBoardViewModel(IAuthenticationService authenticationService, IContentDialogService contentDialogService, IProjectStore projectStore, INavigationService navigationService) : base(navigationService)
 	{
 		_projectStore = projectStore;
 		AuthenticationService = authenticationService;
 		ContentDialogService = contentDialogService;
 
-        _kernel = new StandardKernel(new NinjectRegistration());
+		_kernel = new StandardKernel(new NinjectRegistration());
 
 		_projectService = _kernel.Get<IProjectService>();
 		_taskBoardService = _kernel.Get<ITaskBoardService>();
 		_taskCardService = _kernel.Get<ITaskCardService>();
-        _taskListService = _kernel.Get<ITaskListService>();
+		_taskListService = _kernel.Get<ITaskListService>();
 		_userService = _kernel.Get<IUserService>();
 
 		Project = _projectStore.CurrentProject;
@@ -177,9 +178,10 @@ public partial class TaskBoardViewModel : BaseViewModel, IDropTarget
 		TaskBoard = null;
 		TaskBoard = Project.TaskBoard;
 
-		TaskBoard.TaskLists = new ObservableCollection<TaskList>(_taskListService.GetTaskLists(TaskBoard.Id));
+		Project.TaskBoard.TaskLists = null;
+		Project.TaskBoard.TaskLists = new ObservableCollection<TaskList>(_taskListService.GetTaskLists(Project.TaskBoard.Id));
 
-		foreach (var taskList in TaskBoard.TaskLists)
+		foreach (var taskList in Project.TaskBoard.TaskLists)
 			taskList.TaskCards = new ObservableCollection<TaskCard>(_taskCardService.GetTaskCards(taskList.Id));
 	}
 
@@ -200,50 +202,89 @@ public partial class TaskBoardViewModel : BaseViewModel, IDropTarget
 		ChosenTaskCard = taskCard;
 	}
 
+	[RelayCommand]
+	public void OpenTaskListAdditionFlyout()
+	{
+		CurrentTaskList = null;
+		CurrentTaskListTitle = null;
+		CurrentListType = ListType.Query;
+		if (!IsTaskListCreateFlyoutOpen)
+			IsTaskListCreateFlyoutOpen = true;
+	}
+
+	[RelayCommand]
+	public void OpenTaskListRedactingFlyout(TaskList taskList)
+	{
+		CurrentTaskList = taskList;
+		CurrentTaskListTitle = taskList.Title;
+		CurrentListType = taskList.Type;
+		if (!IsTaskListRedactFlyoutOpen)
+			IsTaskListRedactFlyoutOpen = true;
+	}
+
+	[RelayCommand]
+	public void DeleteTaskList()
+	{
+		_taskListService.DeleteTaskList(CurrentTaskList.Id);
+		IsTaskListRedactFlyoutOpen = false;
+		LoadTaskBoardData();
+		LoadTaskBoardData();
+	}
+
+	[RelayCommand]
+	public void AddTaskList()
+	{
+		var taskList = new TaskList(CurrentListType) { Title = CurrentTaskListTitle, TaskBoardId = Project.TaskBoard.Id };
+
+		_taskListService.CreateTaskList(taskList);
+		LoadTaskBoardData();
+		LoadTaskBoardData();
+	}
+
 	#region DragAndDrop
 	public void DragOver(IDropInfo dropInfo)
-    {
-        if (dropInfo.Data is TaskList dropList)
-        {
-            if (dropInfo.TargetItem is TaskList targetList && targetList != dropList)
-            {
-                dropInfo.Effects = DragDropEffects.Move;
-                dropInfo.DropTargetAdorner = DropTargetAdorners.Highlight;
+	{
+		if (dropInfo.Data is TaskList dropList)
+		{
+			if (dropInfo.TargetItem is TaskList targetList && targetList != dropList)
+			{
+				dropInfo.Effects = DragDropEffects.Move;
+				dropInfo.DropTargetAdorner = DropTargetAdorners.Highlight;
 			}
-        }
+		}
 
-        if (dropInfo.Data is TaskCard dropCard)
-        {
-            if(dropCard.Executor?.Id == AuthenticationService.AccountStore.CurrentUser.Id || IsOwner)
-            {
-                if(dropInfo.TargetItem is TaskList)
-                {
+		if (dropInfo.Data is TaskCard dropCard)
+		{
+			if (dropCard.Executor?.Id == AuthenticationService.AccountStore.CurrentUser.Id || IsOwner)
+			{
+				if (dropInfo.TargetItem is TaskList)
+				{
 					dropInfo.Effects = DragDropEffects.Move;
 					dropInfo.DropTargetAdorner = DropTargetAdorners.Highlight;
 				}
-                else
-                {
+				else
+				{
 					dropInfo.Effects = DragDropEffects.Move;
 					dropInfo.DropTargetAdorner = DropTargetAdorners.Insert;
 				}
 			}
-            else
-            {
-                dropInfo.Effects = DragDropEffects.None;
-            }
-        }
+			else
+			{
+				dropInfo.Effects = DragDropEffects.None;
+			}
+		}
 
 		Debug.WriteLine(dropInfo.TargetItem?.ToString());
 	}
 
 	void IDropTarget.Drop(IDropInfo dropInfo)
 	{
-        if (dropInfo.TargetItem != null && dropInfo.TargetCollection != null)
-        {
+		if (dropInfo.TargetItem != null && dropInfo.TargetCollection != null)
+		{
 			var sourceCollection = (IList)dropInfo.DragInfo.SourceCollection;
 
 			if (dropInfo.Data is TaskCard)
-            {
+			{
 				if (dropInfo.TargetItem is TaskList taskList)
 				{
 					sourceCollection.RemoveAt(dropInfo.DragInfo.SourceIndex);
@@ -274,13 +315,13 @@ public partial class TaskBoardViewModel : BaseViewModel, IDropTarget
 					}
 				}
 			}
-			
+
 			if (dropInfo.Data is TaskList)
 			{
 				//fuck...
 				(sourceCollection[sourceCollection.IndexOf((TaskList)dropInfo.TargetItem)], sourceCollection[sourceCollection.IndexOf((TaskList)dropInfo.Data)]) = (sourceCollection[sourceCollection.IndexOf((TaskList)dropInfo.Data)], sourceCollection[sourceCollection.IndexOf((TaskList)dropInfo.TargetItem)]);
 			}
-        }
-    }
+		}
+	}
 	#endregion
 }

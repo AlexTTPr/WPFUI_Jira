@@ -30,7 +30,7 @@ internal class TaskListRepository : IRepository<TaskList>
 
 	public ICollection<TaskList> GetCollection(int ownerId)
 	{
-		return _context.TaskLists.Where(c => c.TaskBoard.Id == ownerId).ToList();
+		return _context.TaskLists.Where(c => c.TaskBoardId == ownerId).ToList();
 	}
 
 	public TaskList GetItem(int Id)

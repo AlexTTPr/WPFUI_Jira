@@ -14,7 +14,6 @@
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Views\Windows\MainWindow.xaml.cs</FileName>
     </TypeIdentifier>
-    <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="WPFUI_Jira.Views.CreateTaskView" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="8.25" Y="8.25" Width="1.5" />
@@ -22,7 +21,6 @@
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Views\CreateTaskView.xaml.cs</FileName>
     </TypeIdentifier>
-    <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="WPFUI_Jira.Views.EditTaskView" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="10" Y="8.25" Width="1.5" />
@@ -30,7 +28,6 @@
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Views\EditTaskView.xaml.cs</FileName>
     </TypeIdentifier>
-    <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="WPFUI_Jira.Views.ProjectsView" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="6.5" Y="9.25" Width="1.5" />
@@ -72,7 +69,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="WPFUI_Jira.ViewModels.CreateTaskViewModel" Collapsed="true">
-    <Position X="10.5" Y="6.75" Width="1.5" />
+    <Position X="10.25" Y="4.75" Width="3.25" />
     <TypeIdentifier>
       <HashCode>CAAAAAAAQIAAAAgEEAAAGAAQAAAAACBAAAAEAIAAAAA=</HashCode>
       <FileName>ViewModels\CreateTaskViewModel.cs</FileName>
@@ -99,18 +96,10 @@
       <FileName>ViewModels\ProjectsViewModel.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="WPFUI_Jira.ViewModels.TaskBoardViewModel" Collapsed="true">
-    <Position X="8.25" Y="6.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAgAgAVAIACBgBECIAEAAAAAAAAABAAAAEAGAAABA=</HashCode>
-      <FileName>ViewModels\TaskBoardViewModel.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" />
-  </Class>
   <Class Name="WPFUI_Jira.ViewModels.TaskCardDetailsViewModel" Collapsed="true">
     <Position X="12.75" Y="6.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>iAAAgAAAAIBAAAAEEAAAAAAQAAEAAAAAAAAAAKAAUAA=</HashCode>
+      <HashCode>iEAAQAAAAIBAAAUEEAAAAAAQAAUIAAAAAAAAAKAAUAA=</HashCode>
       <FileName>ViewModels\TaskCardDetailsViewModel.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -156,7 +145,7 @@
   <Class Name="WPFUI_Jira.Models.Services.TaskCardService" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="14.75" Y="4.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>ACAAgIAAACAAAAAAAAAAAAAAAKAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>ACAAgIAAACAAAACAAAAAAAAAAKAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Models\Services\TaskCardService.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
@@ -172,7 +161,7 @@
   <Class Name="WPFUI_Jira.Models.Services.UserService" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="18.25" Y="5.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>IAAAgIAAAQAAAAAEAAAAAAAAAQAAAAAAEAAAAAAAAAA=</HashCode>
+      <HashCode>IgAAgIAAAQAAAAAEAAAAAAAAAQAAAAAAEAAAAAAAAAA=</HashCode>
       <FileName>Models\Services\UserService.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
@@ -267,7 +256,7 @@
   <Class Name="WPFUI_Jira.Models.ActionRecord" Collapsed="true">
     <Position X="16.5" Y="1.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>CgACAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AgACAAAAAAAAAAAAAAAAAAAAAAAAIAAAQAAAAAAAAAA=</HashCode>
       <FileName>Models\ActionRecord.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -295,7 +284,7 @@
   <Class Name="WPFUI_Jira.Models.TaskList" Collapsed="true">
     <Position X="18.25" Y="4.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAACAAAAAAAAAEAAAAAAAAACAAAAAAAAAQAAgAAAAAA=</HashCode>
+      <HashCode>AAACAAAAAAAAAEAAAAAAAAACAAAAAAAAAQAAAAAAAEA=</HashCode>
       <FileName>Models\TaskList.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -305,6 +294,14 @@
       <HashCode>AAACAAAAACAAAAAEAAAAAAQAAAAAAAAAAAIYAAAAAAA=</HashCode>
       <FileName>Models\User.cs</FileName>
     </TypeIdentifier>
+  </Class>
+  <Class Name="WPFUI_Jira.ViewModels.TaskBoardViewModel" Collapsed="true">
+    <Position X="8.25" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAkAVAIgCBgBECIgkAAAAIAAAABAAAgEQGAEARE=</HashCode>
+      <FileName>ViewModels\TaskBoardViewModel.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
   </Class>
   <Interface Name="WPFUI_Jira.Models.Services.Interfaces.IAuthenticationService" Collapsed="true">
     <Position X="16.5" Y="7" Width="1.5" />
