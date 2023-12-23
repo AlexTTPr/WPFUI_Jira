@@ -67,7 +67,7 @@ public partial class TaskCardDetailsViewModel : BaseViewModel
 		Workers = _projectStore.CurrentProject.Workers;
 
 		IsHaveExecutor = _taskCard.Executor != null;
-		IsOwner = _projectStore.CurrentProject.Owner.Id == _accountStore.CurrentUser.Id;
+		IsOwner = _projectStore.CurrentProject.Owner.Id == _accountStore.CurrentAccount.Id;
 	}
 
 	//[RelayCommand]
@@ -86,7 +86,7 @@ public partial class TaskCardDetailsViewModel : BaseViewModel
 	[RelayCommand]
 	public void TakeTask()
 	{
-		_taskCardStore.CurrentTaskCard.Executor = _accountStore.CurrentUser;
+		_taskCardStore.CurrentTaskCard.Executor = _accountStore.CurrentAccount;
 
 		_taskCardService.UpdateTaskCard(_taskCardStore.CurrentTaskCard);
 	}

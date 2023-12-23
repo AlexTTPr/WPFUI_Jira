@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace WPFUI_Jira.Models.Stores.Interfaces;
-public interface IAccountStore
+public interface IUserStore
 {
-    User CurrentAccount { get; set; }
+	User CurrentUser { get; set; }
 
-	event Action CurrentAccountChanged;
+	event Action CurrentUserChanged;
 }

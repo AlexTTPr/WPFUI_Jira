@@ -23,7 +23,9 @@ internal class ApplicationContext : DbContext
 
     public DbSet<TaskCard> TaskCards { get; set; }
 
-    public ApplicationContext()
+	public DbSet<ActionRecord> ActionRecord { get; set; }
+
+	public ApplicationContext()
     {
         AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
         AppContext.SetSwitch("Npgsql.DisableDateTimeInfinityConversions", true);

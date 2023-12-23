@@ -37,7 +37,7 @@ public partial class ProjectsViewModel : BaseViewModel
 		_userService = App.GetService<IUserService>();
 		_projectService = App.GetService<IProjectService>();
 
-		_user = AuthenticationService.AccountStore.CurrentUser;
+		_user = AuthenticationService.AccountStore.CurrentAccount;
 		Projects = _projectService.GetProjects(_user.Id);
 	}
 

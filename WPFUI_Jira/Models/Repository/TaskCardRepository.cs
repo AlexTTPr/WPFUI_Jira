@@ -31,7 +31,7 @@ internal class TaskCardRepository : IRepository<TaskCard>
 
 	public ICollection<TaskCard> GetCollection(int ownerId)
 	{
-		return _context.TaskCards.Where(c => c.TaskListId == ownerId).Include(c => c.Executor).ToList();
+		return _context.TaskCards.Where(c => c.TaskListId == ownerId).Include(c => c.Executor).Include(c=>c.Actions).ToList();
 	}
 
 	public TaskCard GetItem(int Id)

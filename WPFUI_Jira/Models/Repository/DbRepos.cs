@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WPFUI_Jira.Models.Repository.Interfaces;
+using WPFUI_Jira.Views;
 
 namespace WPFUI_Jira.Models.Repository;
 internal class DbRepos : IDbRepos
@@ -15,6 +16,7 @@ internal class DbRepos : IDbRepos
     private TaskBoardRepository? _boardRepository;
     private TaskListRepository? _listRepository;
     private TaskCardRepository? _cardRepository;
+    private ActionRecordRepository? _actionRecordRepository;
 
     public DbRepos()
     {
@@ -66,7 +68,16 @@ internal class DbRepos : IDbRepos
         }
     }
 
-    public void Save()
+	public IRepository<ActionRecord> ActionRecords
+	{
+		get
+		{
+			_actionRecordRepository ??= new ActionRecordRepository(_context);
+			return _actionRecordRepository;
+		}
+	}
+
+	public void Save()
     {
         _context.SaveChanges();
     }

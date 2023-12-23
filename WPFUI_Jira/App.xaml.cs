@@ -44,33 +44,42 @@ public partial class App
 		{
 			services.AddHostedService<ApplicationHostService>();
 
-			services.AddSingleton<MainWindow>();
-			services.AddSingleton<MainWindowViewModel>();
+			services.AddScoped<IDbRepos, DbRepos>();
 
 			services.AddSingleton<INavigationService, NavigationService>();
 			services.AddSingleton<ISnackbarService, SnackbarService>();
 			services.AddSingleton<IContentDialogService, ContentDialogService>();
 			services.AddSingleton<IAuthenticationService, AuthenticationService>();
-			services.AddSingleton<ITaskListStore, TaskListStore>();
-			services.AddSingleton<IAccountStore, AccountStore>();
-			services.AddSingleton<IProjectStore, ProjectStore>();
 			services.AddSingleton<IUserService, UserService>();
-			services.AddScoped<IDbRepos, DbRepos>();
 			services.AddSingleton<IProjectService, ProjectService>();
 			services.AddSingleton<ITaskBoardService, TaskBoardService>();
 			services.AddSingleton<ITaskListService, TaskListService>();
 			services.AddSingleton<ITaskCardService, TaskCardService>();
-			services.AddSingleton<ITaskCardStore, TaskCardStore>();
+			services.AddSingleton<IActionRecordService, ActionRecordService>();
 
-			services.AddTransient<ProjectsView>();
+			services.AddSingleton<ITaskListStore, TaskListStore>();
+			services.AddSingleton<IAccountStore, AccountStore>();
+			services.AddSingleton<IProjectStore, ProjectStore>();
+			services.AddSingleton<ITaskCardStore, TaskCardStore>();
+			services.AddSingleton<IUserStore, UserStore>();
+
+			services.AddSingleton<MainWindow>();
+			services.AddSingleton<MainWindowViewModel>();
+
 			services.AddTransient<ProjectsViewModel>();
-			services.AddTransient<TaskBoardView>();
 			services.AddTransient<TaskBoardViewModel>();
 			services.AddTransient<CreateTaskCardViewModel>();
 			services.AddTransient<TaskCardDetailsViewModel>();
-			services.AddTransient<ProjectDetailsView>();
 			services.AddTransient<ProjectDetailsViewModel>();
+			services.AddTransient<UserStatisticsViewModel>();
 
+			services.AddTransient<ProjectsView>();
+			services.AddTransient<TaskBoardView>();
+			services.AddTransient<ProjectDetailsView>();
+			services.AddTransient<UserStatisticsView>();
+
+
+			//!
 			services.AddSingleton<DashboardPage>();
 			services.AddSingleton<DashboardViewModel>();
 			services.AddSingleton<SettingsPage>();
@@ -81,7 +90,7 @@ public partial class App
 	{
 		//tmp hdcd
 		var authService = AppHost.Services.GetRequiredService<IAuthenticationService>();
-		authService.AccountStore.CurrentUser = AppHost.Services.GetRequiredService<IUserService>().GetUser(1);
+		authService.AccountStore.CurrentAccount = AppHost.Services.GetRequiredService<IUserService>().GetUser(1);
 	}
 
 	/// <summary>

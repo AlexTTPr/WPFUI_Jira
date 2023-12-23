@@ -18,5 +18,7 @@ public interface IDbRepos
 
     IRepository<TaskCard> TaskCards { get; }
 
-    void Save();
+	IRepository<ActionRecord> ActionRecords { get; }
+
+	void Save();
 }

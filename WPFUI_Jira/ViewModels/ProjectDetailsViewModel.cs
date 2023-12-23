@@ -11,6 +11,7 @@ using LiveCharts.Defaults;
 using CsvHelper;
 using System.Globalization;
 using System.IO;
+using WPFUI_Jira.Views;
 
 namespace WPFUI_Jira.ViewModels;
 public partial class ProjectDetailsViewModel : BaseViewModel
@@ -70,6 +71,8 @@ public partial class ProjectDetailsViewModel : BaseViewModel
 	[RelayCommand]
 	public void ViewWorkersStatistic(User user)
 	{
-		//_navigationService.Navigate(typeof(UserStatisticsView));
+		var userStore = App.GetService<IUserStore>();
+		userStore.CurrentUser = user;
+		_navigationService.Navigate(typeof(UserStatisticsView));
 	}
 }

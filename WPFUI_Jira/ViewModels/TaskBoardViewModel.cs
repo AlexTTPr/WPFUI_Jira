@@ -28,7 +28,7 @@ public partial class TaskBoardViewModel : BaseViewModel, IDropTarget
 	[ObservableProperty]
 	private Project _project;
 
-	public bool IsOwner => Project.Owner.Id == AuthenticationService.AccountStore.CurrentUser.Id;
+	public bool IsOwner => Project.Owner.Id == AuthenticationService.AccountStore.CurrentAccount.Id;
 
 	[ObservableProperty]
 	private TaskBoard _taskBoard;
@@ -129,7 +129,7 @@ public partial class TaskBoardViewModel : BaseViewModel, IDropTarget
 	public void TimeReport(DateTime timeSpent)
 	{
 		var time = timeSpent.AddSeconds(-timeSpent.Second).TimeOfDay;
-		ChosenTaskCard.Actions.Add(new(time, AuthenticationService.AccountStore.CurrentUser.Id));
+		ChosenTaskCard.Actions.Add(new(time, AuthenticationService.AccountStore.CurrentAccount.Id));
 		_taskCardService.UpdateTaskCard(ChosenTaskCard);
 	}
 
@@ -185,13 +185,13 @@ public partial class TaskBoardViewModel : BaseViewModel, IDropTarget
 
 	bool IsOwnerOrExecutor(TaskCard taskCard)
 	{
-		return IsOwner || taskCard.Executor?.Id == AuthenticationService.AccountStore.CurrentUser.Id;
+		return IsOwner || taskCard.Executor?.Id == AuthenticationService.AccountStore.CurrentAccount.Id;
 	}
 
 	[RelayCommand]
 	public void SetChosenTaskCard(TaskCard taskCard)
 	{
-		if (taskCard.Executor?.Id != AuthenticationService.AccountStore.CurrentUser.Id)
+		if (taskCard.Executor?.Id != AuthenticationService.AccountStore.CurrentAccount.Id)
 			return;
 
 		if (!IsTaskCardFlyoutOpen)
@@ -260,7 +260,7 @@ public partial class TaskBoardViewModel : BaseViewModel, IDropTarget
 
 		if (dropInfo.Data is TaskCard dropCard)
 		{
-			if (dropCard.Executor?.Id == AuthenticationService.AccountStore.CurrentUser.Id || IsOwner)
+			if (dropCard.Executor?.Id == AuthenticationService.AccountStore.CurrentAccount.Id || IsOwner)
 			{
 				if (dropInfo.TargetItem is TaskList)
 				{
