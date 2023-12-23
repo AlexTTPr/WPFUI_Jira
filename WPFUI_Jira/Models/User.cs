@@ -1,7 +1,10 @@
-﻿namespace WPFUI_Jira.Models;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace WPFUI_Jira.Models;
 
 public class User
 {
+    [Key]
     public int Id { get; set; }
 
     public string Email { get; set; }

@@ -35,11 +35,11 @@ internal class UserRepository : IRepository<User>
 
 	public User GetItem(int Id)
 	{
-		return _context.Users.Find(Id);
+		return _context.Users.AsNoTracking().Where(c => c.Id == Id).Single();
 	}
 
 	public void Update(User item)
 	{
-		_context.Entry(item).State = EntityState.Modified;
+		_context.Users.Update(item);
 	}
 }

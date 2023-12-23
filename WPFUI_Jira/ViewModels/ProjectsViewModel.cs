@@ -34,10 +34,8 @@ public partial class ProjectsViewModel : BaseViewModel
     {
 		AuthenticationService = authenticationService;
 
-		_kernel = new StandardKernel(new NinjectRegistration());
-
-		_userService = _kernel.Get<IUserService>();
-		_projectService = _kernel.Get<IProjectService>();
+		_userService = App.GetService<IUserService>();
+		_projectService = App.GetService<IProjectService>();
 
 		_user = AuthenticationService.AccountStore.CurrentUser;
 		Projects = _projectService.GetProjects(_user.Id);

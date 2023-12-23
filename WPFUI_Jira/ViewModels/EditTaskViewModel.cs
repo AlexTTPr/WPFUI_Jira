@@ -51,9 +51,8 @@ public partial class EditTaskViewModel : BaseViewModel
 
 		_contentDialogService = contentDialogService;
 		_projectStore = projectStore;
-		_kernel = new StandardKernel(new NinjectRegistration());
-		_taskCardService = _kernel.Get<ITaskCardService>();
-		_userService = _kernel.Get<IUserService>();
+		_taskCardService = App.GetService<ITaskCardService>();
+		_userService = App.GetService<IUserService>();
 
 		_workers = _userService.GetUsers(Project.Id);
 

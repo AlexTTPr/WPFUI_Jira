@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
@@ -10,7 +11,8 @@ namespace WPFUI_Jira.Models;
 
 public class TaskCard
 {
-    public int Id { get; set; }
+	[Key]
+	public int Id { get; set; }
 
     public string Title { get; set; }
 
@@ -18,6 +20,9 @@ public class TaskCard
 
 	public int TaskListId { get; set; }
 
+    public int? ExecutorId { get; set; }
+
+	[ForeignKey(nameof(ExecutorId))]
 	public User? Executor { get; set; }
 
     public DateTime CreationTime { get; set; }

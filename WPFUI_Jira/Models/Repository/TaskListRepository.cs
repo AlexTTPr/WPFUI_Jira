@@ -30,7 +30,7 @@ internal class TaskListRepository : IRepository<TaskList>
 
 	public ICollection<TaskList> GetCollection(int ownerId)
 	{
-		return _context.TaskLists.Where(c => c.TaskBoardId == ownerId).ToList();
+		return _context.TaskLists.Where(c => c.TaskBoardId == ownerId).ToList().OrderBy(c=>c.Id).ToList();
 	}
 
 	public TaskList GetItem(int Id)
@@ -40,6 +40,6 @@ internal class TaskListRepository : IRepository<TaskList>
 
 	public void Update(TaskList item)
 	{
-		_context.Entry(item).State = EntityState.Modified;
+		_context.TaskLists.Update(item);
 	}
 }

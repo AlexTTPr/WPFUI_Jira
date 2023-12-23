@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
@@ -11,7 +12,8 @@ namespace WPFUI_Jira.Models;
 
 public class TaskList
 {
-    public int Id { get; set; }
+	[Key]
+	public int Id { get; set; }
 
     public int TaskBoardId { get; set; }
 

@@ -55,7 +55,7 @@ public partial class App
 			services.AddSingleton<IAccountStore, AccountStore>();
 			services.AddSingleton<IProjectStore, ProjectStore>();
 			services.AddSingleton<IUserService, UserService>();
-			services.AddSingleton<IDbRepos, DbRepos>();
+			services.AddScoped<IDbRepos, DbRepos>();
 			services.AddSingleton<IProjectService, ProjectService>();
 			services.AddSingleton<ITaskBoardService, TaskBoardService>();
 			services.AddSingleton<ITaskListService, TaskListService>();
@@ -71,8 +71,6 @@ public partial class App
 
 			services.AddSingleton<DashboardPage>();
 			services.AddSingleton<DashboardViewModel>();
-			services.AddSingleton<DataPage>();
-			services.AddSingleton<DataViewModel>();
 			services.AddSingleton<SettingsPage>();
 			services.AddSingleton<SettingsViewModel>();
 		}).Build();

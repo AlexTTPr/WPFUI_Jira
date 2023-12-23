@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using WPFUI_Jira.Models.Repository;
@@ -11,9 +12,11 @@ using WPFUI_Jira.Models.Repository;
 namespace WPFUI_Jira.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20231223025840_Migration25")]
+    partial class Migration25
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -144,8 +147,6 @@ namespace WPFUI_Jira.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ExecutorId");
-
                     b.HasIndex("TaskListId");
 
                     b.ToTable("TaskCards");
@@ -254,17 +255,11 @@ namespace WPFUI_Jira.Migrations
 
             modelBuilder.Entity("WPFUI_Jira.Models.TaskCard", b =>
                 {
-                    b.HasOne("WPFUI_Jira.Models.User", "Executor")
-                        .WithMany()
-                        .HasForeignKey("ExecutorId");
-
                     b.HasOne("WPFUI_Jira.Models.TaskList", null)
                         .WithMany("TaskCards")
                         .HasForeignKey("TaskListId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Executor");
                 });
 
             modelBuilder.Entity("WPFUI_Jira.Models.TaskList", b =>

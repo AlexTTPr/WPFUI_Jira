@@ -17,8 +17,6 @@ public partial class TaskBoardViewModel : BaseViewModel, IDropTarget
 	public IAuthenticationService AuthenticationService { get; init; }
 	public IContentDialogService ContentDialogService { get; init; }
 
-	private StandardKernel _kernel;
-
 	private IProjectStore _projectStore;
 	private IProjectService _projectService;
 	private ITaskBoardService _taskBoardService;
@@ -61,17 +59,15 @@ public partial class TaskBoardViewModel : BaseViewModel, IDropTarget
 		AuthenticationService = authenticationService;
 		ContentDialogService = contentDialogService;
 
-		_kernel = new StandardKernel(new NinjectRegistration());
-
-		_projectService = _kernel.Get<IProjectService>();
-		_taskBoardService = _kernel.Get<ITaskBoardService>();
-		_taskCardService = _kernel.Get<ITaskCardService>();
-		_taskListService = _kernel.Get<ITaskListService>();
-		_userService = _kernel.Get<IUserService>();
+		_projectService = App.GetService<IProjectService>();
+		_taskBoardService = App.GetService<ITaskBoardService>();
+		_taskCardService = App.GetService<ITaskCardService>();
+		_taskListService = App.GetService<ITaskListService>();
+		_userService = App.GetService<IUserService>();
 
 		Project = _projectStore.CurrentProject;
 		//...
-		Project.TaskBoard = _taskBoardService.GetTaskBoards(Project.Id).First();
+		Project.TaskBoard = _taskBoardService.GetTaskBoards(Project.Id).FirstOrDefault();
 		Project.Workers = _userService.GetUsers(Project.Id);
 		LoadTaskBoardData();
 	}
@@ -280,48 +276,51 @@ public partial class TaskBoardViewModel : BaseViewModel, IDropTarget
 
 	void IDropTarget.Drop(IDropInfo dropInfo)
 	{
-		if (dropInfo.TargetItem != null && dropInfo.TargetCollection != null)
+		if (dropInfo.TargetItem == null || dropInfo.TargetCollection == null)
+			return;
+
+		var sourceCollection = (IList)dropInfo.DragInfo.SourceCollection;
+
+		if (dropInfo.Data is TaskCard taskCard)
 		{
-			var sourceCollection = (IList)dropInfo.DragInfo.SourceCollection;
-
-			if (dropInfo.Data is TaskCard)
+			if (dropInfo.TargetItem is TaskList taskList)
 			{
-				if (dropInfo.TargetItem is TaskList taskList)
+				sourceCollection.RemoveAt(dropInfo.DragInfo.SourceIndex);
+				taskList.TaskCards.Add(taskCard);
+
+				taskCard.TaskListId = taskList.Id;
+				_taskCardService.UpdateTaskCard(taskCard);
+				return;
+			}
+
+			var destCollection = (IList)dropInfo.TargetCollection;
+
+			if (destCollection != null)
+			{
+				if (dropInfo.TargetItem.GetType().Equals(dropInfo.Data.GetType()))
 				{
-					sourceCollection.RemoveAt(dropInfo.DragInfo.SourceIndex);
-					taskList.TaskCards.Add((TaskCard)dropInfo.Data);
-
-					_taskCardService.UpdateTaskCard((TaskCard)dropInfo.Data);
-					return;
-				}
-
-				var destCollection = (IList)dropInfo.TargetCollection;
-
-				if (destCollection != null)
-				{
-					if (dropInfo.TargetItem.GetType().Equals(dropInfo.Data.GetType()))
+					if (destCollection == sourceCollection && dropInfo.DragInfo.SourceIndex < dropInfo.InsertIndex)
 					{
-						if (destCollection == sourceCollection && dropInfo.DragInfo.SourceIndex < dropInfo.InsertIndex)
-						{
-							sourceCollection.RemoveAt(dropInfo.DragInfo.SourceIndex);
-							destCollection.Insert(dropInfo.InsertIndex - 1, dropInfo.Data);
-						}
-						else
-						{
-							sourceCollection.RemoveAt(dropInfo.DragInfo.SourceIndex);
-							destCollection.Insert(dropInfo.InsertIndex, dropInfo.Data);
-						}
-
-						_taskCardService.UpdateTaskCard((TaskCard)dropInfo.Data);
+						sourceCollection.RemoveAt(dropInfo.DragInfo.SourceIndex);
+						destCollection.Insert(dropInfo.InsertIndex - 1, dropInfo.Data);
 					}
+					else
+					{
+						sourceCollection.RemoveAt(dropInfo.DragInfo.SourceIndex);
+						destCollection.Insert(dropInfo.InsertIndex, dropInfo.Data);
+					}
+
+					//i should be burning in hell for this
+					taskCard.TaskListId = ((TaskCard)destCollection[0]).TaskListId;
+					_taskCardService.UpdateTaskCard(taskCard);
 				}
 			}
+		}
 
-			if (dropInfo.Data is TaskList)
-			{
-				//fuck...
-				(sourceCollection[sourceCollection.IndexOf((TaskList)dropInfo.TargetItem)], sourceCollection[sourceCollection.IndexOf((TaskList)dropInfo.Data)]) = (sourceCollection[sourceCollection.IndexOf((TaskList)dropInfo.Data)], sourceCollection[sourceCollection.IndexOf((TaskList)dropInfo.TargetItem)]);
-			}
+		if (dropInfo.Data is TaskList)
+		{
+			//fuck...
+			(sourceCollection[sourceCollection.IndexOf((TaskList)dropInfo.TargetItem)], sourceCollection[sourceCollection.IndexOf((TaskList)dropInfo.Data)]) = (sourceCollection[sourceCollection.IndexOf((TaskList)dropInfo.Data)], sourceCollection[sourceCollection.IndexOf((TaskList)dropInfo.TargetItem)]);
 		}
 	}
 	#endregion
