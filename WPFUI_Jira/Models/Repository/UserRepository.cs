@@ -40,6 +40,6 @@ internal class UserRepository : IRepository<User>
 
 	public void Update(User item)
 	{
-		_context.Users.Update(item);
+		_context.Entry(item).State = EntityState.Modified;
 	}
 }

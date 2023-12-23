@@ -68,6 +68,8 @@ public partial class App
 			services.AddTransient<TaskBoardViewModel>();
 			services.AddTransient<CreateTaskCardViewModel>();
 			services.AddTransient<TaskCardDetailsViewModel>();
+			services.AddTransient<ProjectDetailsView>();
+			services.AddTransient<ProjectDetailsViewModel>();
 
 			services.AddSingleton<DashboardPage>();
 			services.AddSingleton<DashboardViewModel>();

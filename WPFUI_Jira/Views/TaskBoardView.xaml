@@ -94,7 +94,10 @@
     <StackPanel VerticalAlignment="Stretch">
         <DockPanel>
             <ui:TextBlock FontTypography="Subtitle" Text="{Binding Title}" />
-            <ui:Button Content="Прогресс" Icon="{ui:SymbolIcon ChartMultiple20}" />
+            <ui:Button
+                Command="{Binding ViewModel.ViewProjectDetailsCommand}"
+                Content="Инфо"
+                Icon="{ui:SymbolIcon ChartMultiple20}" />
         </DockPanel>
         <ui:DynamicScrollViewer HorizontalScrollBarVisibility="Auto">
             <StackPanel>

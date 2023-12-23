@@ -40,6 +40,6 @@ internal class TaskListRepository : IRepository<TaskList>
 
 	public void Update(TaskList item)
 	{
-		_context.TaskLists.Update(item);
+		_context.Entry(item).State = EntityState.Modified;
 	}
 }

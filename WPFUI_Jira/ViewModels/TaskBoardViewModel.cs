@@ -9,6 +9,7 @@ using WPFUI_Jira.Models;
 using WPFUI_Jira.Models.Ninject;
 using WPFUI_Jira.Models.Services.Interfaces;
 using WPFUI_Jira.Models.Stores.Interfaces;
+using WPFUI_Jira.Views;
 
 namespace WPFUI_Jira.ViewModels;
 
@@ -237,6 +238,13 @@ public partial class TaskBoardViewModel : BaseViewModel, IDropTarget
 		LoadTaskBoardData();
 		LoadTaskBoardData();
 	}
+
+	[RelayCommand]
+	public void ViewProjectDetails()
+	{
+		_navigationService.Navigate(typeof(ProjectDetailsView));
+	}
+
 
 	#region DragAndDrop
 	public void DragOver(IDropInfo dropInfo)

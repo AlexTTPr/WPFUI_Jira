@@ -41,6 +41,6 @@ internal class ProjectRepository : IRepository<Project>
 
 	public void Update(Project item)
 	{
-		_context.Projects.Update(item);
+		_context.Entry(item).State = EntityState.Modified;
 	}
 }

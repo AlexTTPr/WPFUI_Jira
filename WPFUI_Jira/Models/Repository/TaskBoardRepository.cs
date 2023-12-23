@@ -41,6 +41,6 @@ internal class TaskBoardRepository : IRepository<TaskBoard>
 
     public void Update(TaskBoard item)
     {
-		_context.TaskBoards.Update(item);
+		_context.Entry(item).State = EntityState.Modified;
 	}
 }
