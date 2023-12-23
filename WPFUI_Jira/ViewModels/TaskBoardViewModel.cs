@@ -115,12 +115,12 @@ public partial class TaskBoardViewModel : BaseViewModel, IDropTarget
 		{
 			case Wpf.Ui.Controls.ContentDialogResult.Primary:
 				context.SaveChanges();
-				context.SaveChanges();
 				LoadTaskBoardData();
-				context.SaveChanges();
+				LoadTaskBoardData();
 				break;
 			case Wpf.Ui.Controls.ContentDialogResult.Secondary:
 				context.Delete();
+				LoadTaskBoardData();
 				LoadTaskBoardData();
 				break;
 			case Wpf.Ui.Controls.ContentDialogResult.None:
@@ -163,6 +163,7 @@ public partial class TaskBoardViewModel : BaseViewModel, IDropTarget
 		{
 			case Wpf.Ui.Controls.ContentDialogResult.Primary:
 				context.Save();
+				LoadTaskBoardData();
 				LoadTaskBoardData();
 				break;
 			case Wpf.Ui.Controls.ContentDialogResult.Secondary:
