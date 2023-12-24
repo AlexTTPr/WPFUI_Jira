@@ -230,6 +230,16 @@ public partial class TaskBoardViewModel : BaseViewModel, IDropTarget
 	}
 
 	[RelayCommand]
+	public void UpdateTaskList()
+	{
+		CurrentTaskList.Title = CurrentTaskListTitle;
+		CurrentTaskList.Type = CurrentListType;
+		_taskListService.UpdateTaskList(CurrentTaskList);
+		LoadTaskBoardData();
+		LoadTaskBoardData();
+	}
+
+	[RelayCommand]
 	public void AddTaskList()
 	{
 		var taskList = new TaskList(CurrentListType) { Title = CurrentTaskListTitle, TaskBoardId = Project.TaskBoard.Id };
@@ -297,8 +307,6 @@ public partial class TaskBoardViewModel : BaseViewModel, IDropTarget
 				taskList.TaskCards.Add(taskCard);
 
 				taskCard.TaskListId = taskList.Id;
-				_taskCardService.UpdateTaskCard(taskCard);
-				return;
 			}
 
 			var destCollection = (IList)dropInfo.TargetCollection;
@@ -320,9 +328,9 @@ public partial class TaskBoardViewModel : BaseViewModel, IDropTarget
 
 					//i should be burning in hell for this
 					taskCard.TaskListId = ((TaskCard)destCollection[0]).TaskListId;
-					_taskCardService.UpdateTaskCard(taskCard);
 				}
 			}
+			_taskCardService.UpdateTaskCard(taskCard);
 		}
 
 		if (dropInfo.Data is TaskList)

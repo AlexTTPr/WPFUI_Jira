@@ -33,17 +33,43 @@
                 </lvc:PieChart.DataTooltip>
             </lvc:PieChart>
 
-            <Label Content="Работники" Margin="5"/>
-            <ListView ItemsSource="{Binding ViewModel.Project.Workers}" Margin="5">
+            <Label Margin="5" Content="Создать отчёт" />
+            <DockPanel Margin="5">
+                <ui:TextBox
+                    MinWidth="200"
+                    PlaceholderText="Введите название файла"
+                    Text="{Binding ViewModel.FileToSaveName}" />
+                <Label
+                    Margin="10,0"
+                    VerticalAlignment="Center"
+                    Content=".csv" />
+            </DockPanel>
+            <DockPanel Margin="5">
+                <ui:Button Command="{Binding ViewModel.SaveFileCommand}" Content="Сохранить" />
+                <ui:TextBlock VerticalAlignment="Center" Text="{Binding ViewModel.SavedFileNotice}" />
+            </DockPanel>
+
+            <Label Margin="5" Content="Работники" />
+            <ListView
+                Margin="5"
+                Background="Red"
+                ItemsSource="{Binding ViewModel.Project.Workers}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <DockPanel>
-                            <ui:SymbolIcon Symbol="PersonCircle32" FontSize="40" Margin="10, 0"/>
+                            <ui:SymbolIcon
+                                Margin="10,0"
+                                FontSize="40"
+                                Symbol="PersonCircle32" />
                             <StackPanel>
                                 <Label Content="{Binding Name}" />
                                 <Label Content="{Binding Email}" />
                             </StackPanel>
-                            <ui:Button Content="Сатистика" Command="{Binding DataContext.ViewModel.ViewWorkersStatisticCommand, RelativeSource={RelativeSource AncestorType={x:Type ListView}}}" CommandParameter="{Binding}" HorizontalAlignment="Right"/>
+                            <ui:Button
+                                HorizontalAlignment="Right"
+                                Command="{Binding DataContext.ViewModel.ViewWorkersStatisticCommand, RelativeSource={RelativeSource AncestorType={x:Type ListView}}}"
+                                CommandParameter="{Binding}"
+                                Content="Сатистика" />
                         </DockPanel>
                     </DataTemplate>
                 </ListView.ItemTemplate>

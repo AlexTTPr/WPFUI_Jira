@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using WPFUI_Jira.Models;
 using WPFUI_Jira.Models.Services.Interfaces;
 using WPFUI_Jira.Models.Stores.Interfaces;
+using static WPFUI_Jira.ViewModels.UserStatisticsViewModel;
 
 namespace WPFUI_Jira.ViewModels;
 public partial class UserStatisticsViewModel : BaseViewModel
@@ -23,7 +24,7 @@ public partial class UserStatisticsViewModel : BaseViewModel
 	private User _user;
 
 	[ObservableProperty]
-	private DateTime[] _dates;
+	private List<DateTime> _dates;
 
 	[ObservableProperty]
 	private SeriesCollection _seriesCollection;
@@ -40,12 +41,12 @@ public partial class UserStatisticsViewModel : BaseViewModel
 
 		User = userStore.CurrentUser;
 
-		Dates = new DateTime[7];
+		Dates = new List<DateTime>();
 		for (int count = 0, i = -6; i <= 0; count++, i++)
-			Dates[count] = DateTime.Now.AddDays(i);
+			Dates.Add(DateTime.Now.AddDays(i).Date);
 
 		var dayConfig = Mappers.Xy<DateModel>()
-		.X(dayModel => dayModel.DateTime.Ticks)
+		.X(dayModel => Dates.IndexOf(dayModel.DateTime))
 		.Y(dayModel => dayModel.Value);
 
 		SeriesCollection = new SeriesCollection(dayConfig);	
@@ -54,7 +55,7 @@ public partial class UserStatisticsViewModel : BaseViewModel
 		{
 			Title = "Tracked time",
 			Values = new ChartValues<DateModel>(),
-			LineSmoothness = 0
+			LineSmoothness = 0.1
 		};
 
 		foreach (var date in Dates)
@@ -67,8 +68,8 @@ public partial class UserStatisticsViewModel : BaseViewModel
 
 			line.Values.Add(new DateModel() { DateTime = date.Date, Value = totalTime.Ticks});
 		}
-
-		FormatterX = value => new DateTime((long)value).ToString("dd|MM|yyyy", CultureInfo.InvariantCulture);
+		
+		FormatterX = value => DateTime.Now.Date.AddDays(-6 + (int)value).ToString("dd.MM.yyyy", CultureInfo.InvariantCulture);
 		FormatterY = value => new TimeSpan((long)value).ToString();
 
 		SeriesCollection.Add(line);

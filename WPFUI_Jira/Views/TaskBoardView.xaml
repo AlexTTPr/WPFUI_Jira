@@ -92,20 +92,20 @@
     </Page.Resources>
 
     <StackPanel VerticalAlignment="Stretch">
-        <DockPanel>
+        <DockPanel HorizontalAlignment="Stretch" Margin="10,5">
             <ui:TextBlock FontTypography="Subtitle" Text="{Binding Title}" />
             <ui:Button
                 Command="{Binding ViewModel.ViewProjectDetailsCommand}"
                 Content="Инфо"
-                Icon="{ui:SymbolIcon ChartMultiple20}" />
+                Icon="{ui:SymbolIcon ChartMultiple20}"
+                Visibility="{Binding ViewModel.IsOwner, Converter={StaticResource VisibilityOfBool}}"
+                HorizontalAlignment="Right"/>
         </DockPanel>
         <ui:DynamicScrollViewer HorizontalScrollBarVisibility="Auto">
             <StackPanel>
                 <DockPanel>
                     <ui:VirtualizingItemsControl
                         x:Name="ItemsControl"
-                        Margin="5"
-                        Padding="5"
                         dd:DragDrop.DropHandler="{Binding ViewModel}"
                         dd:DragDrop.IsDragSource="{Binding ViewModel.IsOwner}"
                         dd:DragDrop.IsDropTarget="True"
@@ -316,7 +316,7 @@
                                     Margin="0,5,5,0"
                                     Padding="5"
                                     HorizontalAlignment="Stretch"
-                                    Command="{Binding ViewModel.UpadateTaskListCommand}"
+                                    Command="{Binding ViewModel.UpdateTaskListCommand}"
                                     Content="Сохранить" />
                                 <ui:Button
                                     Margin="5,5,0,0"
