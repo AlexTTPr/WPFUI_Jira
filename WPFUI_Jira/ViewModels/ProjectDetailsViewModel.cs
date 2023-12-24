@@ -39,28 +39,27 @@ public partial class ProjectDetailsViewModel : BaseViewModel
 		_projectStore = projectStore;
 		Project = _projectStore.CurrentProject;
 
-		SeriesCollection = new SeriesCollection();
-
-		SeriesCollection.Add(new PieSeries
+		SeriesCollection = new SeriesCollection
 		{
-			Title = "Задачи, находящиеся в очереди",
-			Values = new ChartValues<ObservableValue> { new ObservableValue(Project.TaskBoard.TaskLists.Where(i=>i.Type == ListType.Query).Select(i => i.TaskCards.Count).Sum()) },
-			DataLabels = true
-		});
-
-		SeriesCollection.Add(new PieSeries
-		{
-			Title = "Задачи, находящиеся в работе",
-			Values = new ChartValues<ObservableValue> { new ObservableValue(Project.TaskBoard.TaskLists.Where(i => i.Type == ListType.InWork).Select(i => i.TaskCards.Count).Sum()) },
-			DataLabels = true
-		});
-
-		SeriesCollection.Add(new PieSeries
-		{
-			Title = "Выполненные задачи",
-			Values = new ChartValues<ObservableValue> { new ObservableValue(Project.TaskBoard.TaskLists.Where(i => i.Type == ListType.Done).Select(i => i.TaskCards.Count).Sum()) },
-			DataLabels = true
-		});
+			new PieSeries
+			{
+				Title = "Задачи в очереди",
+				Values = new ChartValues<ObservableValue> { new ObservableValue(Project.TaskBoard.TaskLists.Where(i => i.Type == ListType.Query).Select(i => i.TaskCards.Count).Sum()) },
+				DataLabels = true
+			},
+			new PieSeries
+			{
+				Title = "Задачи в работе",
+				Values = new ChartValues<ObservableValue> { new ObservableValue(Project.TaskBoard.TaskLists.Where(i => i.Type == ListType.InWork).Select(i => i.TaskCards.Count).Sum()) },
+				DataLabels = true
+			},
+			new PieSeries
+			{
+				Title = "Выполненные задачи",
+				Values = new ChartValues<ObservableValue> { new ObservableValue(Project.TaskBoard.TaskLists.Where(i => i.Type == ListType.Done).Select(i => i.TaskCards.Count).Sum()) },
+				DataLabels = true
+			}
+		};
 	}
 
 	[RelayCommand]

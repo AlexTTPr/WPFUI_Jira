@@ -27,6 +27,8 @@
             </ObjectDataProvider>
             <BooleanToVisibilityConverter x:Key="VisibilityOfBool" />
             <helpers:MultiValueConverter x:Key="MultiValueConverter" />
+            <helpers:UserEqualityConverter x:Key="UserEqualityConverter" />
+            <helpers:UserEqualityToBrushConverter x:Key="UserEqualityToBrushConverter" />
             <StackPanel
                 x:Key="ViewDetailsCD"
                 Width="500"
@@ -92,14 +94,14 @@
     </Page.Resources>
 
     <StackPanel VerticalAlignment="Stretch">
-        <DockPanel HorizontalAlignment="Stretch" Margin="10,5">
+        <DockPanel Margin="10,5" HorizontalAlignment="Stretch">
             <ui:TextBlock FontTypography="Subtitle" Text="{Binding Title}" />
             <ui:Button
+                HorizontalAlignment="Right"
                 Command="{Binding ViewModel.ViewProjectDetailsCommand}"
                 Content="Инфо"
                 Icon="{ui:SymbolIcon ChartMultiple20}"
-                Visibility="{Binding ViewModel.IsOwner, Converter={StaticResource VisibilityOfBool}}"
-                HorizontalAlignment="Right"/>
+                Visibility="{Binding ViewModel.IsOwner, Converter={StaticResource VisibilityOfBool}}" />
         </DockPanel>
         <ui:DynamicScrollViewer HorizontalScrollBarVisibility="Auto">
             <StackPanel>
@@ -153,7 +155,8 @@
                                                 Command="{Binding DataContext.ViewModel.OpenTaskListRedactingFlyoutCommand, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"
                                                 CommandParameter="{Binding}"
                                                 Icon="{ui:SymbolIcon Settings20,
-                                                                     Filled=True}" />
+                                                                     Filled=True}"
+                                                Visibility="{Binding DataContext.ViewModel.IsOwner, Converter={StaticResource VisibilityOfBool}, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
                                         </DockPanel>
                                         <ui:VirtualizingItemsControl
                                             MinHeight="50"
@@ -176,51 +179,47 @@
                                                         VerticalAlignment="Top"
                                                         Command="{Binding DataContext.ViewModel.ViewTaskDetailsCommand, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}, AncestorLevel=2}}"
                                                         IsChevronVisible="False">
+                                                        <ui:CardAction.BorderBrush>
+                                                            <MultiBinding Converter="{StaticResource UserEqualityToBrushConverter}">
+                                                                <Binding Path="Executor" />
+                                                                <Binding Path="DataContext.ViewModel.AuthenticationService.AccountStore.CurrentAccount" RelativeSource="{RelativeSource AncestorType={x:Type ItemsControl}, AncestorLevel=2}" />
+                                                            </MultiBinding>
+                                                        </ui:CardAction.BorderBrush>
                                                         <ui:CardAction.CommandParameter>
                                                             <MultiBinding Converter="{StaticResource MultiValueConverter}">
                                                                 <Binding Source="{StaticResource ViewDetailsCD}" />
                                                                 <Binding BindsDirectlyToSource="True" />
                                                             </MultiBinding>
                                                         </ui:CardAction.CommandParameter>
-                                                        <Grid>
-                                                            <Grid.ColumnDefinitions>
-                                                                <ColumnDefinition Width="*" />
-                                                                <ColumnDefinition Width="Auto" />
-                                                            </Grid.ColumnDefinitions>
-                                                            <Grid.RowDefinitions>
-                                                                <RowDefinition Height="Auto" />
-                                                                <RowDefinition Height="Auto" />
-                                                            </Grid.RowDefinitions>
-                                                            <Label
-                                                                Grid.Row="0"
-                                                                Grid.Column="0"
-                                                                Content="{Binding Title}" />
+                                                        <StackPanel>
+                                                            <Label Content="{Binding Title}" />
                                                             <ui:TextBlock
-                                                                Grid.Row="1"
-                                                                Grid.Column="0"
+                                                                Margin="0,10"
                                                                 Text="{Binding Description}"
                                                                 TextWrapping="Wrap" />
-                                                            <ui:Button
-                                                                Grid.Row="1"
-                                                                Grid.Column="1"
-                                                                Width="30"
-                                                                Height="30"
-                                                                HorizontalAlignment="Right"
-                                                                VerticalAlignment="Bottom"
-                                                                BorderThickness="0"
-                                                                Command="{Binding DataContext.ViewModel.SetChosenTaskCardCommand, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}, AncestorLevel=2}}"
-                                                                CommandParameter="{Binding}">
-                                                                <Button.Template>
-                                                                    <ControlTemplate>
-                                                                        <Ellipse>
-                                                                            <Ellipse.Fill>
-                                                                                <ImageBrush ImageSource="../Resources/Images/noaccountimage.png" />
-                                                                            </Ellipse.Fill>
-                                                                        </Ellipse>
-                                                                    </ControlTemplate>
-                                                                </Button.Template>
-                                                            </ui:Button>
-                                                        </Grid>
+                                                            <DockPanel>
+                                                                <Label
+                                                                    HorizontalAlignment="Stretch"
+                                                                    VerticalAlignment="Center"
+                                                                    Content="{Binding Executor.Name}" />
+                                                                <ui:Button
+                                                                    HorizontalAlignment="Right"
+                                                                    VerticalAlignment="Bottom"
+                                                                    Background="Transparent"
+                                                                    BorderThickness="0"
+                                                                    Command="{Binding DataContext.ViewModel.SetChosenTaskCardCommand, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}, AncestorLevel=2}}"
+                                                                    CommandParameter="{Binding}"
+                                                                    Icon="{ui:SymbolIcon CalendarReply28}">
+                                                                    <ui:Button.Visibility>
+                                                                        <MultiBinding Converter="{StaticResource UserEqualityConverter}">
+                                                                            <Binding Path="Executor" />
+                                                                            <Binding Path="DataContext.ViewModel.AuthenticationService.AccountStore.CurrentAccount" RelativeSource="{RelativeSource AncestorType={x:Type ItemsControl}, AncestorLevel=2}" />
+                                                                        </MultiBinding>
+                                                                    </ui:Button.Visibility>
+
+                                                                </ui:Button>
+                                                            </DockPanel>
+                                                        </StackPanel>
                                                     </ui:CardAction>
                                                 </DataTemplate>
                                             </ui:VirtualizingItemsControl.ItemTemplate>

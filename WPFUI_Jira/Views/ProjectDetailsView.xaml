@@ -15,45 +15,73 @@
 
     <ui:DynamicScrollViewer>
         <StackPanel>
-            <Label Content="{Binding ViewModel.Project.Title}" />
-
-            <lvc:PieChart
-                Name="Chart"
-                MaxWidth="700"
-                MaxHeight="500"
-                Margin="0,50"
-                InnerRadius="50"
-                LegendLocation="Right"
-                Series="{Binding ViewModel.SeriesCollection}">
-                <lvc:PieChart.ChartLegend>
-                    <lvc:DefaultLegend BulletSize="20" />
-                </lvc:PieChart.ChartLegend>
-                <lvc:PieChart.DataTooltip>
-                    <lvc:DefaultTooltip BulletSize="20" />
-                </lvc:PieChart.DataTooltip>
-            </lvc:PieChart>
-
-            <Label Margin="5" Content="Создать отчёт" />
-            <DockPanel Margin="5">
-                <ui:TextBox
-                    MinWidth="200"
-                    PlaceholderText="Введите название файла"
-                    Text="{Binding ViewModel.FileToSaveName}" />
-                <Label
-                    Margin="10,0"
-                    VerticalAlignment="Center"
-                    Content=".csv" />
-            </DockPanel>
-            <DockPanel Margin="5">
-                <ui:Button Command="{Binding ViewModel.SaveFileCommand}" Content="Сохранить" />
-                <ui:TextBlock VerticalAlignment="Center" Text="{Binding ViewModel.SavedFileNotice}" />
-            </DockPanel>
-
-            <Label Margin="5" Content="Работники" />
-            <ListView
+            <ui:TextBlock
                 Margin="5"
-                Background="Red"
-                ItemsSource="{Binding ViewModel.Project.Workers}">
+                HorizontalAlignment="Center"
+                FontTypography="TitleLarge"
+                Foreground="White"
+                Text="{Binding ViewModel.Project.Title}" />
+            <ui:TextBlock
+                Margin="15,0"
+                FontTypography="Subtitle"
+                Foreground="White"
+                Text="Описание" />
+            <ui:TextBlock
+                Margin="15,0"
+                Foreground="White"
+                Text="{Binding ViewModel.Project.Description}" />
+            <DockPanel Margin="0,10">
+                <StackPanel Margin="25">
+                    <Label Margin="5" Content="Создать отчёт" />
+                    <DockPanel Margin="5">
+                        <ui:TextBox
+                            MinWidth="200"
+                            PlaceholderText="Введите название файла"
+                            Text="{Binding ViewModel.FileToSaveName}" />
+                        <Label
+                            Margin="10,0"
+                            VerticalAlignment="Center"
+                            Content=".csv" />
+                    </DockPanel>
+                    <ui:Button
+                        Margin="5"
+                        Command="{Binding ViewModel.SaveFileCommand}"
+                        Content="Сохранить" />
+                    <ui:TextBlock
+                        Margin="5"
+                        VerticalAlignment="Center"
+                        Text="{Binding ViewModel.SavedFileNotice}" />
+                </StackPanel>
+                <lvc:PieChart
+                    Name="Chart"
+                    MinHeight="150"
+                    MaxWidth="700"
+                    Margin="0,10"
+                    InnerRadius="50"
+                    LegendLocation="Right"
+                    Series="{Binding ViewModel.SeriesCollection}">
+                    <lvc:PieChart.ChartLegend>
+                        <lvc:DefaultLegend
+                            MinHeight="200"
+                            BulletSize="20"
+                            Foreground="White"
+                            Orientation="Vertical" />
+                    </lvc:PieChart.ChartLegend>
+                    <lvc:PieChart.DataTooltip>
+                        <lvc:DefaultTooltip Background="DimGray" BulletSize="20" />
+                    </lvc:PieChart.DataTooltip>
+                </lvc:PieChart>
+            </DockPanel>
+
+
+
+            <ui:TextBlock
+                Margin="5"
+                HorizontalAlignment="Center"
+                FontTypography="Subtitle"
+                Foreground="White"
+                Text="Работники" />
+            <ListView Margin="5" ItemsSource="{Binding ViewModel.Project.Workers}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <DockPanel>
@@ -69,7 +97,7 @@
                                 HorizontalAlignment="Right"
                                 Command="{Binding DataContext.ViewModel.ViewWorkersStatisticCommand, RelativeSource={RelativeSource AncestorType={x:Type ListView}}}"
                                 CommandParameter="{Binding}"
-                                Content="Сатистика" />
+                                Content="Статистика" />
                         </DockPanel>
                     </DataTemplate>
                 </ListView.ItemTemplate>
