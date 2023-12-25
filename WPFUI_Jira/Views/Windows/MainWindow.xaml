@@ -11,7 +11,8 @@
     Height="650"
     MinWidth="800"
     MinHeight="500"
-    d:DataContext="{d:DesignInstance local:MainWindow, IsDesignTimeCreatable=True}"
+    d:DataContext="{d:DesignInstance local:MainWindow,
+                                     IsDesignTimeCreatable=True}"
     d:DesignHeight="450"
     d:DesignWidth="800"
     ui:Design.Background="{DynamicResource ApplicationBackgroundBrush}"
@@ -33,24 +34,32 @@
     </ui:FluentWindow.Resources>
 
     <Grid>
-        <ui:TitleBar x:Name="TitleBar"/>
-        <DockPanel Height="25" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="50, 15" >
-            <ui:ImageIcon Height="20" VerticalAlignment="Top" Width="20" Source="../../Resources/Images/applogo.png" />
-            <Label Margin="10, 0, 0, 0" Content="MyJira"/>
+        <ui:TitleBar x:Name="TitleBar" />
+        <DockPanel
+            Height="25"
+            Margin="50,15"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top">
+            <ui:ImageIcon
+                Width="20"
+                Height="20"
+                VerticalAlignment="Top"
+                Source="../../Resources/Images/applogo.png" />
+            <Label Margin="10,0,0,0" Content="MyJira" />
         </DockPanel>
 
 
         <ui:NavigationView
             x:Name="NavigationView"
+            CompactPaneLength="100"
             FooterMenuItemsSource="{Binding ViewModel.FooterMenuItems, Mode=OneWay}"
             FrameMargin="0"
+            IsBackButtonVisible="Visible"
             IsPaneToggleVisible="True"
             MenuItemsSource="{Binding ViewModel.MenuItems, Mode=OneWay}"
             OpenPaneLength="200"
-            CompactPaneLength="100"
             PaneDisplayMode="Left"
-            TitleBar="{Binding ElementName=TitleBar, Mode=OneWay}"
-            IsBackButtonVisible="Visible">
+            TitleBar="{Binding ElementName=TitleBar, Mode=OneWay}">
             <ui:NavigationView.ContentOverlay>
                 <Grid>
                     <ui:SnackbarPresenter x:Name="SnackbarPresenter" />

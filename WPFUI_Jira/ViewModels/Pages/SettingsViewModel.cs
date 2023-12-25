@@ -3,6 +3,7 @@
 // Copyright (C) Leszek Pomianowski and WPF UI Contributors.
 // All Rights Reserved.
 
+using System.Windows.Controls;
 using Wpf.Ui.Controls;
 using WPFUI_Jira.Models;
 using WPFUI_Jira.Models.Services;
@@ -68,6 +69,39 @@ public partial class SettingsViewModel : ObservableObject, INavigationAware
 	{
 		return System.Reflection.Assembly.GetExecutingAssembly().GetName().Version?.ToString()
 			?? String.Empty;
+	}
+
+	[RelayCommand]
+	private async void ShowDialog(object o)
+	{
+		var content = (Panel)o;
+
+		var uiMessageBox = new Wpf.Ui.Controls.MessageBox
+		{
+			Title = "WPF UI Message Box",
+			Content = content,
+			DataContext = this
+		};
+
+		var result = await uiMessageBox.ShowDialogAsync();
+	}
+
+	[RelayCommand]
+	private async void GoToTargets()
+	{
+		var text = new Wpf.Ui.Controls.TextBlock();
+		text.Text = "Данное приложение используется для управления проектами, отслеживания задач, управления задачами и управления командой разработки";
+		text.TextWrapping = TextWrapping.Wrap;
+		var content = new StackPanel();
+		content.Children.Add(text);
+		var uiMessageBox = new Wpf.Ui.Controls.MessageBox
+		{
+			Title = "Для чего оно?",
+			Content = content,
+			DataContext = this
+		};
+
+		var result = await uiMessageBox.ShowDialogAsync();
 	}
 
 	[RelayCommand]

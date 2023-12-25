@@ -104,6 +104,9 @@
                 Command="{Binding ViewModel.ViewProjectDetailsCommand}"
                 Content="Инфо"
                 Icon="{ui:SymbolIcon ChartMultiple20}"
+                ToolTipService.InitialShowDelay="100"
+                ToolTipService.Placement="MousePoint"
+                ToolTipService.ToolTip="Кнопка — это элемент интерфейса компьютерных программ, является метафорой кнопки в технике и, соответственно, изображается схожей с ней и выполняет аналогичные функции.                 При нажатии на неё происходит программно связанное с этим нажатием действие либо событие (например, выйти из приложения)"
                 Visibility="{Binding ViewModel.IsOwner, Converter={StaticResource VisibilityOfBool}}" />
         </DockPanel>
         <ui:DynamicScrollViewer HorizontalScrollBarVisibility="Auto">
@@ -162,6 +165,9 @@
                                                 CommandParameter="{Binding}"
                                                 Icon="{ui:SymbolIcon Settings20,
                                                                      Filled=True}"
+                                                ToolTipService.InitialShowDelay="100"
+                                                ToolTipService.Placement="MousePoint"
+                                                ToolTipService.ToolTip="Кнопка — это элемент интерфейса компьютерных программ, является метафорой кнопки в технике и, соответственно, изображается схожей с ней и выполняет аналогичные функции.                 При нажатии на неё происходит программно связанное с этим нажатием действие либо событие (например, выйти из приложения)"
                                                 Visibility="{Binding DataContext.ViewModel.IsOwner, Converter={StaticResource VisibilityOfBool}, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
                                         </DockPanel>
                                         <ui:VirtualizingItemsControl
@@ -221,7 +227,10 @@
                                                                     BorderThickness="0"
                                                                     Command="{Binding DataContext.ViewModel.SetChosenTaskCardCommand, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}, AncestorLevel=2}}"
                                                                     CommandParameter="{Binding}"
-                                                                    Icon="{ui:SymbolIcon CalendarReply28}">
+                                                                    Icon="{ui:SymbolIcon CalendarReply28}"
+                                                                    ToolTipService.InitialShowDelay="100"
+                                                                    ToolTipService.Placement="MousePoint"
+                                                                    ToolTipService.ToolTip="Кнопка — это элемент интерфейса компьютерных программ, является метафорой кнопки в технике и, соответственно, изображается схожей с ней и выполняет аналогичные функции.                 При нажатии на неё происходит программно связанное с этим нажатием действие либо событие (например, выйти из приложения)">
                                                                     <ui:Button.Visibility>
                                                                         <MultiBinding Converter="{StaticResource UserEqualityConverter}">
                                                                             <Binding Path="Executor" />
@@ -242,6 +251,9 @@
                                             Command="{Binding DataContext.ViewModel.CreateTaskCommand, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"
                                             Icon="{ui:SymbolIcon Add20,
                                                                  Filled=True}"
+                                            ToolTipService.InitialShowDelay="100"
+                                            ToolTipService.Placement="MousePoint"
+                                            ToolTipService.ToolTip="Кнопка — это элемент интерфейса компьютерных программ, является метафорой кнопки в технике и, соответственно, изображается схожей с ней и выполняет аналогичные функции.                 При нажатии на неё происходит программно связанное с этим нажатием действие либо событие (например, выйти из приложения)"
                                             Visibility="{Binding DataContext.ViewModel.IsOwner, Converter={StaticResource VisibilityOfBool}, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}">
                                             <ui:Button.CommandParameter>
                                                 <MultiBinding Converter="{StaticResource MultiValueConverter}">
@@ -263,6 +275,9 @@
                         VerticalAlignment="Top"
                         Command="{Binding DataContext.ViewModel.OpenTaskListAdditionFlyoutCommand}"
                         Icon="{ui:SymbolIcon AddSquare20}"
+                        ToolTipService.InitialShowDelay="100"
+                        ToolTipService.Placement="MousePoint"
+                        ToolTipService.ToolTip="Кнопка — это элемент интерфейса компьютерных программ, является метафорой кнопки в технике и, соответственно, изображается схожей с ней и выполняет аналогичные функции.                 При нажатии на неё происходит программно связанное с этим нажатием действие либо событие (например, выйти из приложения)"
                         Visibility="{Binding ViewModel.IsOwner, Converter={StaticResource VisibilityOfBool}}" />
                     <ui:Flyout IsOpen="{Binding ViewModel.IsTaskCardFlyoutOpen, Mode=TwoWay}" Placement="MousePoint">
                         <StackPanel Width="100">
@@ -280,7 +295,10 @@
                                 HorizontalAlignment="Stretch"
                                 Command="{Binding ViewModel.TimeReportCommand}"
                                 CommandParameter="{Binding Value, ElementName=ReportTime}"
-                                Content="Сохранить" />
+                                Content="Сохранить"
+                                ToolTipService.InitialShowDelay="100"
+                                ToolTipService.Placement="MousePoint"
+                                ToolTipService.ToolTip="Кнопка — это элемент интерфейса компьютерных программ, является метафорой кнопки в технике и, соответственно, изображается схожей с ней и выполняет аналогичные функции.                 При нажатии на неё происходит программно связанное с этим нажатием действие либо событие (например, выйти из приложения)" />
                         </StackPanel>
                     </ui:Flyout>
                     <ui:Flyout IsOpen="{Binding ViewModel.IsTaskListCreateFlyoutOpen, Mode=TwoWay}" Placement="MousePoint">
@@ -303,7 +321,10 @@
                                 Padding="5"
                                 HorizontalAlignment="Stretch"
                                 Command="{Binding ViewModel.AddTaskListCommand}"
-                                Content="Сохранить" />
+                                Content="Сохранить"
+                                ToolTipService.InitialShowDelay="100"
+                                ToolTipService.Placement="MousePoint"
+                                ToolTipService.ToolTip="Кнопка — это элемент интерфейса компьютерных программ, является метафорой кнопки в технике и, соответственно, изображается схожей с ней и выполняет аналогичные функции.                 При нажатии на неё происходит программно связанное с этим нажатием действие либо событие (например, выйти из приложения)" />
                         </StackPanel>
                     </ui:Flyout>
                     <ui:Flyout IsOpen="{Binding ViewModel.IsTaskListRedactFlyoutOpen, Mode=TwoWay}" Placement="MousePoint">
@@ -327,13 +348,19 @@
                                     Padding="5"
                                     HorizontalAlignment="Stretch"
                                     Command="{Binding ViewModel.UpdateTaskListCommand}"
-                                    Content="Сохранить" />
+                                    Content="Сохранить"
+                                    ToolTipService.InitialShowDelay="100"
+                                    ToolTipService.Placement="MousePoint"
+                                    ToolTipService.ToolTip="Кнопка — это элемент интерфейса компьютерных программ, является метафорой кнопки в технике и, соответственно, изображается схожей с ней и выполняет аналогичные функции.                 При нажатии на неё происходит программно связанное с этим нажатием действие либо событие (например, выйти из приложения)" />
                                 <ui:Button
                                     Margin="5,5,0,0"
                                     Padding="5"
                                     HorizontalAlignment="Stretch"
                                     Command="{Binding ViewModel.DeleteTaskListCommand}"
-                                    Content="Удалить" />
+                                    Content="Удалить"
+                                    ToolTipService.InitialShowDelay="100"
+                                    ToolTipService.Placement="MousePoint"
+                                    ToolTipService.ToolTip="Кнопка — это элемент интерфейса компьютерных программ, является метафорой кнопки в технике и, соответственно, изображается схожей с ней и выполняет аналогичные функции.                 При нажатии на неё происходит программно связанное с этим нажатием действие либо событие (например, выйти из приложения)" />
                             </DockPanel>
                         </StackPanel>
                     </ui:Flyout>

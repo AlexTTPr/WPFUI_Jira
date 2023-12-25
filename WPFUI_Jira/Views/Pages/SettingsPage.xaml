@@ -17,7 +17,30 @@
     Foreground="{DynamicResource TextFillColorPrimaryBrush}"
     mc:Ignorable="d">
     <Page.Resources>
-        <helpers:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
+        <ResourceDictionary>
+            <StackPanel
+                x:Key="DialogContent"
+                Width="800"
+                Height="800">
+                <TextBlock Text="Справка о программе" TextWrapping="Wrap" />
+                <TreeView AllowDrop="True" ScrollViewer.CanContentScroll="False">
+                    <TreeViewItem Header="О приложении" IsExpanded="True">
+                        <TreeViewItem Header="Для чего оно?">
+                            <ui:Button Content="Перейти" Command="{Binding GoToTargetsCommand}"/>
+                        </TreeViewItem>
+                        <TreeViewItem Header="Как им пользоваться" />
+                        <TreeViewItem Header="Какие есть окна">
+                            <TreeViewItem Header="Проекты" />
+                            <TreeViewItem Header="Доска" />
+                            <TreeViewItem Header="Информация о проекте" />
+                            <TreeViewItem Header="Статистика пользователя" />
+                        </TreeViewItem>
+                        <TreeViewItem Header="Настройки" />
+                    </TreeViewItem>
+                </TreeView>
+            </StackPanel>
+            <helpers:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
+        </ResourceDictionary>
     </Page.Resources>
 
     <StackPanel Margin="10">
@@ -44,5 +67,9 @@
                 SelectedValue="{Binding ViewModel.CurrentUser}" />
             <ui:Button Command="{Binding ViewModel.ChangeUserCommand}" Content="Сменить" />
         </DockPanel>
+        <ui:Button
+            Command="{Binding ViewModel.ShowDialogCommand}"
+            CommandParameter="{StaticResource DialogContent}"
+            Content="Справка" />
     </StackPanel>
 </Page>
