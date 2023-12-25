@@ -28,7 +28,8 @@ public partial class TaskBoardViewModel : BaseViewModel, IDropTarget
 	[ObservableProperty]
 	private Project _project;
 
-	public bool IsOwner => Project.Owner.Id == AuthenticationService.AccountStore.CurrentAccount.Id;
+	[ObservableProperty]
+	private bool _isOwner;
 
 	[ObservableProperty]
 	private TaskBoard _taskBoard;
@@ -71,6 +72,14 @@ public partial class TaskBoardViewModel : BaseViewModel, IDropTarget
 		Project.TaskBoard = _taskBoardService.GetTaskBoards(Project.Id).FirstOrDefault();
 		Project.Workers = _userService.GetUsers(Project.Id);
 		LoadTaskBoardData();
+
+		IsOwner = Project.Owner.Id == AuthenticationService.AccountStore.CurrentAccount.Id;
+		AuthenticationService.AccountStore.CurrentAccountChanged += AccountStore_CurrentAccountChanged;
+	}
+
+	private void AccountStore_CurrentAccountChanged()
+	{
+		IsOwner = Project.Owner.Id == AuthenticationService.AccountStore.CurrentAccount.Id;
 	}
 
 	[RelayCommand]

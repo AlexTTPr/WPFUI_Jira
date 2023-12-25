@@ -4,6 +4,10 @@
 // All Rights Reserved.
 
 using Wpf.Ui.Controls;
+using WPFUI_Jira.Models;
+using WPFUI_Jira.Models.Services;
+using WPFUI_Jira.Models.Services.Interfaces;
+using WPFUI_Jira.Models.Stores.Interfaces;
 
 namespace WPFUI_Jira.ViewModels.Pages;
 public partial class SettingsViewModel : ObservableObject, INavigationAware
@@ -16,7 +20,31 @@ public partial class SettingsViewModel : ObservableObject, INavigationAware
 	[ObservableProperty]
 	private Wpf.Ui.Appearance.ThemeType _currentTheme = Wpf.Ui.Appearance.ThemeType.Unknown;
 
-	public void OnNavigatedTo()
+	IAuthenticationService _authenticationService;
+	IUserService _userService;
+
+	[ObservableProperty]
+	private User _currentUser;
+
+	[ObservableProperty]
+	private ICollection<User> _users;
+
+	public SettingsViewModel(IAuthenticationService authenticationService, IUserService userService)
+    {
+		_authenticationService = authenticationService;
+		_userService = userService;
+
+		CurrentUser = _authenticationService.AccountStore.CurrentAccount;
+		_users = _userService.GetUsers(1);
+    }
+
+	[RelayCommand]
+	public void ChangeUser()
+	{
+		_authenticationService.AccountStore.CurrentAccount = _currentUser;
+	}
+
+    public void OnNavigatedTo()
 	{
 		if (!_isInitialized)
 			InitializeViewModel();

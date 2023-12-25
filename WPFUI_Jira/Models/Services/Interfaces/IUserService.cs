@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WPFUI_Jira.Models.Services.Interfaces;
 
-internal interface IUserService
+public interface IUserService
 {
     ICollection<User> GetUsers(int projectId);
 

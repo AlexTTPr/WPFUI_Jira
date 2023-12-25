@@ -59,6 +59,7 @@
                     IsEnabled="{Binding IsOwner}" />
                 <ComboBox
                     IsEnabled="{Binding IsOwner}"
+                    IsSynchronizedWithCurrentItem="True"
                     ItemsSource="{Binding Workers}"
                     SelectedItem="{Binding Executor}"
                     Visibility="{Binding IsHaveExecutor, Converter={StaticResource VisibilityOfBool}}" />
@@ -86,16 +87,17 @@
                 <Label Content="Исполнитель" />
                 <ComboBox ItemsSource="{Binding Workers}" SelectedValue="{Binding Executor}" />
                 <Label Content="Выберите срок выполнения задачи или оставьте поле пустым если у здачи нет срока выполнения" />
-                <DockPanel>
-                    <xctk:DateTimePicker Value="{Binding ExpirationTime}" />
-                </DockPanel>
+                <xctk:DateTimePicker Value="{Binding ExpirationTime}" />
             </StackPanel>
         </ResourceDictionary>
     </Page.Resources>
 
     <StackPanel VerticalAlignment="Stretch">
         <DockPanel Margin="10,5" HorizontalAlignment="Stretch">
-            <ui:TextBlock FontTypography="Subtitle" Text="{Binding Title}" Foreground="White"/>
+            <ui:TextBlock
+                FontTypography="Subtitle"
+                Foreground="White"
+                Text="{Binding Title}" />
             <ui:Button
                 HorizontalAlignment="Right"
                 Command="{Binding ViewModel.ViewProjectDetailsCommand}"
@@ -225,7 +227,6 @@
                                                                             <Binding Path="DataContext.ViewModel.AuthenticationService.AccountStore.CurrentAccount" RelativeSource="{RelativeSource AncestorType={x:Type ItemsControl}, AncestorLevel=2}" />
                                                                         </MultiBinding>
                                                                     </ui:Button.Visibility>
-
                                                                 </ui:Button>
                                                             </DockPanel>
                                                         </StackPanel>

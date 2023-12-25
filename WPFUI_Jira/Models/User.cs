@@ -10,10 +10,14 @@ public class User
     public string Email { get; set; }
 
     public string Login { get; set; }
+    public string _name;
+    public string Name
+    {
+        get => _name;
+        set => _name = value;
+    }
 
-    public string Name { get; set; }
-
-    public ICollection<Project> OwnedProjects { get; set; }
+	public ICollection<Project> OwnedProjects { get; set; }
 
     public ICollection<Project> WorkProjects { get; set; }
 
