@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing.Printing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -50,6 +51,9 @@ public partial class TaskCardDetailsViewModel : BaseViewModel
 	[ObservableProperty]
 	private ICollection<User>? _workers;
 
+	[ObservableProperty]
+	private TimeSpan _spentTime;
+
 	public TaskCardDetailsViewModel(ITaskCardStore taskCardStore, IProjectStore projectStore, IAccountStore accountStore, ITaskCardService taskCardService, INavigationService navigationService) : base(navigationService)
 	{
 		_taskCardStore = taskCardStore;
@@ -68,6 +72,13 @@ public partial class TaskCardDetailsViewModel : BaseViewModel
 
 		IsHaveExecutor = _taskCard.Executor != null;
 		IsOwner = _projectStore.CurrentProject.Owner.Id == _accountStore.CurrentAccount.Id;
+
+		TimeSpan time = new();
+		foreach(var item in _taskCard.Actions)
+		{
+			time = time + item.TimeSpent;
+		}
+		SpentTime = time;
 	}
 
 	//[RelayCommand]

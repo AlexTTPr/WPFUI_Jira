@@ -70,6 +70,7 @@
                     Text="{Binding Executor.Name}" />-->
                 <Label Content="{Binding CreationTime}" ContentStringFormat="Задача была создана {0}" />
                 <Label Content="{Binding ExpirationTime}" ContentStringFormat="Срок выполнения истекает в: {0}" />
+                <Label Content="{Binding SpentTime}" ContentStringFormat="Потрачено времени на выполнение задачи: {0}" />
             </StackPanel>
             <StackPanel
                 x:Key="CreateTaskCD"
