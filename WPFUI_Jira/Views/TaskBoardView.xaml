@@ -95,7 +95,7 @@
 
     <StackPanel VerticalAlignment="Stretch">
         <DockPanel Margin="10,5" HorizontalAlignment="Stretch">
-            <ui:TextBlock FontTypography="Subtitle" Text="{Binding Title}" />
+            <ui:TextBlock FontTypography="Subtitle" Text="{Binding Title}" Foreground="White"/>
             <ui:Button
                 HorizontalAlignment="Right"
                 Command="{Binding ViewModel.ViewProjectDetailsCommand}"
@@ -145,9 +145,12 @@
                                     <StackPanel>
                                         <DockPanel HorizontalAlignment="Stretch">
                                             <Label
+                                                Margin="5,0"
                                                 HorizontalAlignment="Stretch"
                                                 Content="{Binding Title}"
-                                                Foreground="Black" />
+                                                FontSize="25"
+                                                FontWeight="Bold"
+                                                Foreground="White" />
                                             <ui:Button
                                                 HorizontalAlignment="Right"
                                                 Appearance="Transparent"
@@ -192,16 +195,22 @@
                                                             </MultiBinding>
                                                         </ui:CardAction.CommandParameter>
                                                         <StackPanel>
-                                                            <Label Content="{Binding Title}" />
+                                                            <ui:TextBlock
+                                                                FontWeight="Bold"
+                                                                Text="{Binding Title}"
+                                                                TextTrimming="CharacterEllipsis" />
                                                             <ui:TextBlock
                                                                 Margin="0,10"
+                                                                Foreground="LightGray"
                                                                 Text="{Binding Description}"
                                                                 TextWrapping="Wrap" />
                                                             <DockPanel>
                                                                 <Label
                                                                     HorizontalAlignment="Stretch"
                                                                     VerticalAlignment="Center"
-                                                                    Content="{Binding Executor.Name}" />
+                                                                    Content="{Binding Executor.Name}"
+                                                                    FontWeight="SemiBold"
+                                                                    Foreground="LightGray" />
                                                                 <ui:Button
                                                                     HorizontalAlignment="Right"
                                                                     VerticalAlignment="Bottom"

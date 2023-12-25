@@ -19,8 +19,8 @@ public class Project
     
     public ICollection<User>? Workers { get; set; }
 
-    public int? TaskBoardId { get; set; }
+    public int TaskBoardId { get; set; }
 
     [ForeignKey(nameof(TaskBoardId))]
-    public TaskBoard? TaskBoard { get; set; }
+    public TaskBoard TaskBoard { get; set; }
 }

@@ -72,14 +72,14 @@ public partial class ProjectDetailsViewModel : BaseViewModel
 				InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
 			};
 
-		if (!String.IsNullOrEmpty(FileToSaveName))
-		{
-			var invalidChars = new string(System.IO.Path.GetInvalidFileNameChars()) + new string(System.IO.Path.GetInvalidPathChars());
+		if (String.IsNullOrEmpty(FileToSaveName))
+			return;
 
-			saveFileDialog.FileName = String
-				.Join("_", FileToSaveName.Split(invalidChars.ToCharArray(), StringSplitOptions.RemoveEmptyEntries))
-				.Trim();
-		}
+		var invalidChars = new string(System.IO.Path.GetInvalidFileNameChars()) + new string(System.IO.Path.GetInvalidPathChars());
+
+		saveFileDialog.FileName = String
+			.Join("_", FileToSaveName.Split(invalidChars.ToCharArray(), StringSplitOptions.RemoveEmptyEntries))
+			.Trim();
 
 		if (saveFileDialog.ShowDialog() != true)
 		{

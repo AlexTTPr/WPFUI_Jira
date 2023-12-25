@@ -73,8 +73,6 @@
                 </lvc:PieChart>
             </DockPanel>
 
-
-
             <ui:TextBlock
                 Margin="5"
                 HorizontalAlignment="Center"
