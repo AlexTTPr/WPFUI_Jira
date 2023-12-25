@@ -35,13 +35,12 @@ public partial class SettingsViewModel : ObservableObject, INavigationAware
 		_userService = userService;
 
 		CurrentUser = _authenticationService.AccountStore.CurrentAccount;
-		_users = new List<User>
-		{
-			_userService.GetUser(1)
-		};
-		_users = _userService.GetUsers(1);
 
-    }
+		_users = _userService.GetUsers(1);
+		_users.Add(_userService.GetUser(1));
+
+
+	}
 
 	[RelayCommand]
 	public void ChangeUser()
